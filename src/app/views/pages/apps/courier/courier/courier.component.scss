@@ -1,0 +1,12 @@
+::ng-deep .mat-tab-body.mat-tab-body-active {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1;
+    flex-grow: 1;
+    overflow: initial !important;
+}
+
+::ng-deep .card.card-custom {
+    margin-top: 20px;
+}

@@ -1,0 +1,290 @@
+<mat-card>
+    <mat-card-header>
+        <span style="font-size: x-large;">Order Information</span>
+    </mat-card-header>
+
+    <div class="separator separator-dashed my-6"></div>
+
+    <mat-card-content>
+
+        <mat-card>
+            <mat-card-content>
+                <div style="margin-bottom: 10px;">Service Type</div>
+                <div style="display: flex;">
+                    <ng-container *ngIf="typeOfService == true">
+                        <button style="width: 130px;" mat-raised-button color="primary" type="button" (click)="serviceType('1')">
+                            <span>Standard</span>
+                        </button>
+                        <button style="width: 130px;" mat-button color="primary" type="button" (click)="serviceType('2')" style="margin-left: 20px;">
+                            <span>Delivery Pickup</span>
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="typeOfService == false">
+                        <button style="width: 130px;" mat-button color="primary" type="button" (click)="serviceType('1')">
+                            <span>Standard</span>
+                        </button>
+                        <button style="width: 130px;" mat-raised-button color="primary" type="button" (click)="serviceType('2')" style="margin-left: 20px;">
+                            <span>Delivery Pickup</span>
+                        </button>
+                    </ng-container>
+
+                </div>
+                <div class="separator separator-dashed my-6"></div>
+                <div>Delivery Information</div>
+                <div class="separator separator-dashed my-6"></div>
+                <div class="row">
+                    <div [formGroup]="pickUpAddressForm" class="col-md-5" *ngIf="!typeOfService">
+                        <mat-form-field class="mat-form-field-fluid" style="margin-left: 20px;">
+                            <input style="color: black;" matInput placeholder="Pickup Address" formControlName="pickUpAddress" />
+                            <mat-error>Pickup Address is
+                                <strong>required</strong>
+                            </mat-error>
+                            <mat-hint align="start">Please enter
+                                <strong>Pickup Address</strong>
+                            </mat-hint>
+                        </mat-form-field>
+                        <div class="row" *ngIf="pickUpNoteFlag" style="margin-left:20px">
+                            <mat-form-field class="mat-form-field-fluid">
+                                <input appFocuss matInput placeholder="Leave Notes Here..." formControlName="pickupAddressNote" />
+                            </mat-form-field>
+                        </div>
+                        <label *ngIf="!pickUpNoteFlag" style="color: #3699fd;cursor: pointer; margin-left: 20px; margin-top: 8px;" (click)="addNotes('pickup')">+ Add Notes</label>
+
+                        <div class="row" style="margin-left: 20px;">
+                            <div class="col-lg-4 kt-margin-bottom-20-mobile" style="padding-left: 0px; width: 200px;">
+                                <mat-form-field class="mat-form-field-fluid">
+                                    <mat-select placeholder="State" formControlName="pickUpAddressState">
+                                        <ng-container *ngFor="let state of states">
+                                            <mat-option [value]="state.idstates" (click)="onStateChange(state,'p')">{{state.name}}</mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                    <mat-error>State is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                    <mat-hint align="start">Please enter
+                                        <strong>State</strong>
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 kt-margin-bottom-20-mobile" style="padding-left: 0px; width: 200px;">
+                                <mat-form-field class="mat-form-field-fluid">
+                                    <mat-select placeholder="Area" formControlName="pickUpAddressArea" (selectionChange)="calcPrice()">
+                                        <ng-container *ngFor="let area of pickUpAreas">
+                                            <mat-option [value]="area.idareas">{{area.name}}</mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                    <mat-error>Area is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                    <mat-hint align="start">Please enter
+                                        <strong>Area</strong>
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div [formGroup]="deliveryAddressForm" class="col-md-5">
+                        <mat-form-field class="mat-form-field-fluid" style="margin-left: 20px;">
+                            <input style="color: black;" matInput placeholder="Delivery Address" formControlName="deliveryAddress" />
+                            <mat-error>Delivery Address is
+                                <strong>required</strong>
+                            </mat-error>
+                            <mat-hint align="start">Please enter
+                                <strong>Delivery Address</strong>
+                            </mat-hint>
+                        </mat-form-field>
+                        <div class="row" *ngIf="deliveryNoteFlag" style="margin-left:20px">
+                            <mat-form-field class="mat-form-field-fluid">
+                                <input appFocuss matInput placeholder="Leave Notes Here..." formControlName="deliveryAddressNote" />
+                            </mat-form-field>
+                        </div>
+                        <label *ngIf="!deliveryNoteFlag" style="color: #3699fd;cursor: pointer; margin-left: 20px; margin-top: 8px;" (click)="addNotes('delivery')">+ Add Notes</label>
+
+                        <div class="row" style="margin-left: 20px;">
+                            <div class="col-lg-4 kt-margin-bottom-20-mobile" style="padding-left: 0px; width: 200px;">
+                                <mat-form-field class="mat-form-field-fluid">
+                                    <mat-select placeholder="State" formControlName="deliveryAddressState">
+                                        <ng-container *ngFor="let state of states">
+                                            <mat-option [value]="state.idstates" (click)="onStateChange(state,'d')">{{state.name}}</mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                    <mat-error>State is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                    <mat-hint align="start">Please enter
+                                        <strong>State</strong>
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 kt-margin-bottom-20-mobile" style="padding-left: 0px; width: 200px;">
+                                <mat-form-field class="mat-form-field-fluid">
+                                    <mat-select placeholder="State" formControlName="deliveryAddressArea" (selectionChange)="calcPrice()">
+                                        <ng-container *ngFor="let area of deliveryAreas">
+                                            <mat-option [value]="area.idareas">{{area.name}}</mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                    <mat-error>State is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                    <mat-hint align="start">Please enter
+                                        <strong>State</strong>
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="mat-form-field-fluid" style="margin-left: 20px;">
+                                    <input matInput placeholder="Nombre" formControlName="deliveryName" />
+                                    <mat-error>Nombre is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                    <mat-hint align="start">Please enter
+                                        <strong>Nombre</strong>
+                                    </mat-hint>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-md-5">
+                                <mat-form-field class="mat-form-field-fluid">
+                                    <input matInput placeholder="Telefono" formControlName="deliveryPhone" />
+                                    <mat-error>Telefono is
+                                        <strong>required</strong>
+                                    </mat-error>
+                                    <mat-hint align="start">Please enter
+                                        <strong>Telefono</strong>
+                                    </mat-hint>
+                                </mat-form-field>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="separator separator-dashed my-6"></div>
+                <div>Enter Packages Details</div>
+                <div class="separator separator-dashed my-6"></div>
+
+
+
+
+
+                <div class="row" *ngFor="let package of getControls();let i = index" [formGroup]="package">
+                    <div class="col" style="margin-left: 20px;">
+                        <mat-label>Weight</mat-label>
+                        <mat-form-field appearance="outline" class="mat-form-field-fluid">
+                            <div matPrefix>
+                                <button type="button" class="btn btn-secondary dropdown-toggle" style="margin-top: -16px;
+                                margin-left: -7px;
+                                height: 45px;
+                                border-radius: 4px;" [matMenuTriggerFor]="menuWeightT">{{weightType}}</button>
+                                <mat-menu #menuWeightT="matMenu">
+                                    <a class="dropdown-item" (click)="changeWeightType('kg')">kg</a>
+                                    <a class="dropdown-item" (click)="changeWeightType('lb')">lb</a>
+                                </mat-menu>
+                            </div>
+                            <input matInput type="number" min="0" formControlName="weight" (change)="calcPrice()" />
+                            <mat-error>Weight is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+
+
+                    <div class="col" style="margin-left: 20px;">
+                        <mat-label>Length</mat-label>
+                        <mat-form-field appearance="outline" class="mat-form-field-fluid">
+                            <div matPrefix>
+                                <button type="button" class="btn btn-secondary dropdown-toggle" style="margin-top: -16px;
+                                margin-left: -7px;
+                                height: 45px;
+                                border-radius: 4px;" [matMenuTriggerFor]="menu">{{lengthType}}</button>
+                                <mat-menu #menu="matMenu">
+                                    <a class="dropdown-item" (click)="changelengthType('cm')">cm</a>
+                                    <a class="dropdown-item" (click)="changelengthType('inch')">inch</a>
+                                </mat-menu>
+                            </div>
+                            <input matInput type="number" min="0" formControlName="length" (change)="calcPrice()" />
+                            <mat-error>Length is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col" style="margin-left: 20px;">
+                        <mat-label>Width</mat-label>
+                        <mat-form-field appearance="outline" class="mat-form-field-fluid">
+                            <div matPrefix>
+                                <button type="button" class="btn btn-secondary dropdown-toggle" style="margin-top: -16px;
+                                margin-left: -7px;
+                                height: 45px;
+                                border-radius: 4px;" [matMenuTriggerFor]="menu">{{lengthType}}</button>
+                                <mat-menu #menu="matMenu">
+                                    <a class="dropdown-item" (click)="changelengthType('cm')">cm</a>
+                                    <a class="dropdown-item" (click)="changelengthType('inch')">inch</a>
+                                </mat-menu>
+                            </div>
+                            <input matInput type="number" min="0" formControlName="width" (change)="calcPrice()" />
+                            <mat-error>Width is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col" style="margin-left: 20px;">
+                        <mat-label>Height</mat-label>
+                        <mat-form-field appearance="outline" class="mat-form-field-fluid">
+                            <div matPrefix>
+                                <button type="button" class="btn btn-secondary dropdown-toggle" style="margin-top: -16px;
+                                margin-left: -7px;
+                                height: 45px;
+                                border-radius: 4px;" [matMenuTriggerFor]="menu">{{lengthType}}</button>
+                                <mat-menu #menu="matMenu">
+                                    <a class="dropdown-item" (click)="changelengthType('cm')">cm</a>
+                                    <a class="dropdown-item" (click)="changelengthType('inch')">inch</a>
+                                </mat-menu>
+                            </div>
+                            <input matInput type="number" min="0" formControlName="height" (change)="calcPrice()" />
+                            <mat-error>Height is
+                                <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-2" style="height: fit-content; margin-top: 20px; margin-left: 10px;">
+                        <mat-form-field class="mat-form-field-fluid" style="width: 100%">
+                            <mat-select placeholder="Type" formControlName="type" (selectionChange)="calcPrice()">
+                                <mat-option *ngFor="let type of packageTypes" [value]="type.idpackageType">{{type.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <div class="row" style="margin-top: 35px;">
+                            <mat-icon *ngIf="i+1 == getControls().length" style="cursor:pointer" (click)="addPackage()">add</mat-icon>
+                            <mat-icon *ngIf="getControls().length != 1" style="cursor:pointer" (click)="deletePackage(i)">delete</mat-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="separator separator-dashed my-6"></div>
+                <div>Set an Order</div>
+                <div class="separator separator-dashed my-6"></div>
+                <div class="row">
+                    <div class="col">
+                        <div style="font-size: 15px;"><strong>Shipping Price: ${{totalPrice}}</strong></div>
+                        <div>Any extra comment for customer read before process order</div>
+                    </div>
+                    <div class="col">
+                        <div style="width: fit-content; margin-left: auto; font-size: 15px;"><strong>Want to create an order?</strong></div>
+                        <button mat-raised-button color="primary" type="button" (click)="processOrder()" style="margin-left: auto;
+                        display: flex;
+                        margin-right: 15px;
+                        margin-top: 10px;">
+                            <span>Process Order</span>
+                        </button>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </mat-card-content>
+</mat-card>

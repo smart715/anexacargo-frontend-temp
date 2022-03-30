@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-header style="font-size: 15px;">
+        <strong>New Payment</strong>
+        <button style="margin-left: auto; margin-right: 20px;" mat-raised-button color="primary" type="button" (click)="save()">
+            <span>Save</span>
+        </button>
+    </mat-card-header>
+    <mat-card-content [formGroup]="paymentForm">
+        <div class="separator separator-dashed my-6"></div>
+        <mat-form-field class="mat-form-field-fluid" style="width: 400px; margin-left: 20px;">
+            <input matInput placeholder="Description" formControlName="description" />
+        </mat-form-field>
+        <mat-form-field class="mat-form-field-fluid" style="width: 200px; margin-left: 20px;">
+            <input matInput style="color: black;" placeholder="Pending Amount" formControlName="pending" />
+        </mat-form-field>
+        <mat-form-field class="mat-form-field-fluid" style="width: 200px; margin-left: 20px;">
+            <input matInput style="color: black;" placeholder="Amount Paid" formControlName="paid" />
+        </mat-form-field>
+        <mat-form-field class="mat-form-field-fluid" style="width: 200px; margin-left: 20px;">
+            <input matInput placeholder="New" formControlName="new" type="number" min="0" [max]="max" />
+        </mat-form-field>
+
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,15 @@
+:host {
+	::ng-deep {
+		// override default version style
+		.topbar {
+			> :last-child:not([role="tooltip"]) {
+				.topbar-item {
+					margin-right: 0 !important;
+				}
+			}
+			.topbar-item {
+				margin-right: 0.36rem !important;
+			}
+		}
+	}
+}

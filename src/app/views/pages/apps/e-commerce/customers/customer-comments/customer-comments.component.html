@@ -1,0 +1,40 @@
+<mat-card>
+    <mat-card-header>
+        <div class="col-md-12 kt-margin-bottom-10-mobile" style="display: flex;">
+            <mat-icon style="margin-top: auto; margin-bottom: auto;margin-left: auto;">search</mat-icon>
+            <mat-form-field class="mat-form-field-fluid" style="width: 220px">
+                <input matInput placeholder="Search"/>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="newComments()" style="height: 38px; margin-right: 25px; margin-left: 10px;">
+				<span>{{saveFlag ? 'Save' : 'New'}}</span>
+			</button>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+                <mat-cell *matCellDef="let detail">
+                    {{detail.date}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+                <mat-cell *matCellDef="let detail">
+                    {{detail.description}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="user">
+                <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
+                <mat-cell *matCellDef="let detail">
+                    {{detail.admin}}
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-form-field *ngIf="saveFlag" class="mat-form-field-fluid" style="width: 220px">
+            <input matInput placeholder="Leave Comments" [(ngModel)]="comment"/>
+        </mat-form-field>
+    </mat-card-content>
+</mat-card>

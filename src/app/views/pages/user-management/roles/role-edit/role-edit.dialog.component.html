@@ -1,0 +1,81 @@
+<div class="card card-custom "
+    [ngClass]="{ 'card-body-progress' : viewLoading, 'card-body-progress card-body-progress-overlay' : loadingAfterSubmit }">
+
+    <div class="card-header" *ngIf="role">
+        <div class="card-title">
+            <h3 class="card-label">{{getTitle()}}</h3>
+        </div>
+    </div>
+    <div class="form">
+        <div class="card-body" *ngIf="role">
+            <!-- <div class="card-body-progress">
+                    <mat-spinner [diameter]="20"></mat-spinner>
+                </div> -->
+            <kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+                (close)="onAlertClose($event)">
+                Oh snap! Change a few things up and try submitting again.
+            </kt-alert>
+
+            <div class="mb-2">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput [disabled]="role.isCoreRole" placeholder="Enter Title" [(ngModel)]="role.title" />
+                    <mat-error>Title is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Title</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="separator separator-dashed my-6"></div>
+            <h6>
+                Permissions:
+            </h6>
+
+            <div class="role-timeline-3 mb-5">
+                <div class="role-timeline-3-items role-timeline-3-items-rolePermissions">
+                    <div *ngFor="let _rootRole of rolePermissions" class="role-timeline-3-inner">
+
+                        <!-- {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}} -->
+                        <!-- <button mat-icon-button>
+                                            <mat-icon class="mat-icon-rtl-mirror">expand_more</mat-icon>
+                                        </button> -->
+                        <div class="role-timeline-3-item role-border-bottom-grey role-py-15 role-bg-grey">
+                            <span class="role-timeline-3-item-time">
+                                <mat-checkbox [(ngModel)]="_rootRole.isSelected"
+                                    (change)="isSelectedChanged($event, _rootRole)" [disabled]="role.isCoreRole">
+                                    {{ _rootRole.title }}</mat-checkbox>
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center role-border-bottom-grey role-py-15 role-bg-grey">
+                            <div class="role-timeline-3-item role-timeline-3-item-child"
+                                *ngFor="let _childRole of _rootRole._children">
+                                <span class="role-timeline-3-item-time">
+                                    <mat-checkbox [(ngModel)]="_childRole.isSelected"
+                                        (change)="isSelectedChanged($event, _childRole)" [disabled]="role.isCoreRole">
+                                        {{ _childRole.title }}
+                                    </mat-checkbox>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                <div class="mr-2"></div>
+                <div>
+                    <button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial
+                        matTooltip="Cancel changes">
+                        Cancel
+                    </button>&nbsp;
+                    <button type="button" [disabled]="!isTitleValid() || role.isCoreRole" mat-raised-button
+                        color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

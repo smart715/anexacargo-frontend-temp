@@ -1,0 +1,195 @@
+<mat-card>
+    <mat-card-header>
+        <span style="font-size: x-large;">Order{{order.idorders}}</span>
+        <div style="margin-left: auto;">
+            <button style="width: 80px;margin-right: 20px;" mat-raised-button color="primary" type="button" (click)="cancel()">
+                <span>Cancel</span>
+            </button>
+            <button style="width: 80px;" mat-raised-button color="primary" type="button" (click)="save()">
+                <span>Save</span>
+            </button>
+        </div>
+    </mat-card-header>
+
+    <div class="separator separator-dashed my-6"></div>
+
+    <mat-card-content>
+
+        <mat-card>
+            <mat-card-header style="font-weight: bold;">
+                <div class="row" style="margin-left: -32px;">
+                    Order Information
+                </div>
+            </mat-card-header>
+            <div class="separator separator-dashed my-6"></div>
+            <mat-card-content>
+                <div style="display: flex;">
+                    <mat-form-field *ngIf="!editFlag" class="mat-form-field-fluid" style="width: 40%;">
+                        <input type="text" placeholder="Customer" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="order.customer">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.firstName" (onSelectionChange)="customerChange(option)">
+                                {{option.firstName}}&nbsp;&nbsp;&nbsp;{{option.lastName}}&nbsp;|&nbsp;{{option.company}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="editFlag" class="mat-form-field-fluid">
+                        <input style="color: black;" matInput placeholder="Customer" [(ngModel)]="customerFix" disabled/>
+                    </mat-form-field>
+
+                    <mat-radio-group style="height: fit-content; margin-top: 18px;" label="Delivery Type" [(ngModel)]="order.deliveryType" (selectionChange)="calcPrice()">
+                        <mat-radio-button value="0">Standard</mat-radio-button>
+                        <mat-radio-button value="1">Delivery Pickup</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="separator separator-dashed my-6"></div>
+                <div style="font-weight: bold;">Delivery Information</div>
+                <div class="separator separator-dashed my-6"></div>
+                <div class="row">
+                    <div class="col-md-5" *ngIf="order.deliveryType == '1'">
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Pickup Address" [(ngModel)]="order.pickUpAddress" />
+                        </mat-form-field>
+                        <div class="row" *ngIf="pickUpNoteFlag" style="margin-left: 0px">
+                            <mat-form-field class="mat-form-field-fluid" style="margin-top: -12px;">
+                                <input appFocus matInput placeholder="Leave Notes Here..." [(ngModel)]="pickupAddressNote" />
+                            </mat-form-field>
+                            <!-- <button style="width: 80px; height: 40px; margin-top: auto; margin-bottom: auto;" mat-raised-button color="primary" type="button" (click)="addNotes('pickupDone')">
+                                <span>Save</span>
+                            </button> -->
+                        </div>
+                        <label *ngIf="!pickUpNoteFlag" style="color: #3699fd;cursor: pointer;" (click)="addNotes('pickup')">+ Add Notes</label>
+
+                        <div class="row">
+                            <mat-form-field class="mat-form-field-fluid" style="width: 30%; margin-left: 12px;">
+                                <mat-select placeholder="State" [(ngModel)]="order.pickUpAddressState">
+                                    <mat-option *ngFor="let state of states" [value]="state.idstates" (click)="StateChange(state, 'p')">{{state.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="mat-form-field-fluid" style="width: 30%; margin-left: 20px;">
+                                <mat-select placeholder="Area" [(ngModel)]="order.pickUpAddressArea">
+                                    <mat-option *ngFor="let area of pickUpAreas" [value]="area.idareas" (onSelectionChange)="basePrice('pickup', area)">{{area.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Delivery Address" [(ngModel)]="order.deliveryAddress" />
+                        </mat-form-field>
+                        <div class="row" *ngIf="deliveryNoteFlag" style="margin-left: 0px;">
+                            <mat-form-field class="mat-form-field-fluid" style="margin-top: -12px;">
+                                <input appFocus matInput placeholder="Leave Notes Here..." [(ngModel)]="deliveryAddressNote" />
+                            </mat-form-field>
+                            <!-- <button style="width: 80px; height: 40px; margin-top: auto; margin-bottom: auto;" mat-raised-button color="primary" type="button" (click)="addNotes('deliveryDone')">
+                                <span>Save</span>
+                            </button> -->
+                        </div>
+                        <label *ngIf="!deliveryNoteFlag" style="color: #3699fd;cursor: pointer;" (click)="addNotes('delivery')">+ Add Notes</label>
+
+                        <div class="row">
+                            <mat-form-field class="mat-form-field-fluid" style="width: 30%; margin-left: 12px;">
+                                <mat-select placeholder="State" [(ngModel)]="order.deliveryAddressState">
+                                    <mat-option *ngFor="let state of states" [value]="state.idstates" (click)="StateChange(state, 'd')">{{state.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="mat-form-field-fluid" style="width: 30%; margin-left: 20px;">
+                                <mat-select placeholder="Area" [(ngModel)]="order.deliveryAddressArea">
+                                    <mat-option *ngFor="let area of deliveryAreas" [value]="area.idareas" (onSelectionChange)="basePrice('delivery', area)">{{area.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="mat-form-field-fluid">
+                                    <input matInput placeholder="Nombre" [(ngModel)]="order.deliveryName" />
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-5">
+                                <mat-form-field class="mat-form-field-fluid">
+                                    <input matInput placeholder="Telefono" [(ngModel)]="order.deliveryPhone" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="separator separator-dashed my-6"></div>
+                <div class="row" style="margin-left: 0px;">
+                    <div style="font-weight: bold;">Packages cm/kg = {{packages.length}}</div>
+                    <div class="status3" style="margin-left: auto; margin-right: 30px; font-size: 16px;">Price = $ {{order.cost}}</div>
+                </div>
+                <div class="separator separator-dashed my-6"></div>
+
+                <div class="row" *ngFor="let package of packages; index as i">
+                    <div class="form-group" style="width: 15%; margin-left: 20px;">
+                        <label>Weight</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" [matMenuTriggerFor]="menuWeightT">{{weightType}}</button>
+                                <mat-menu #menuWeightT="matMenu">
+                                    <a class="dropdown-item" (click)="changeWeightType('kg')">kg</a>
+                                    <a class="dropdown-item" (click)="changeWeightType('lb')">lb</a>
+                                </mat-menu>
+                            </div>
+                            <input type="number" min="0" class="form-control" [(ngModel)]='package.weight' (change)="calcPrice()" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="width: 15%; margin-left: 20px;">
+                        <label>Length</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" [matMenuTriggerFor]="menu">{{lengthType}}</button>
+                                <mat-menu #menu="matMenu">
+                                    <a class="dropdown-item" (click)="changelengthType('cm')">cm</a>
+                                    <a class="dropdown-item" (click)="changelengthType('inch')">inch</a>
+                                </mat-menu>
+                            </div>
+                            <input type="number" min="0" class="form-control" [(ngModel)]='package.length' (change)="calcPrice()" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="width: 15%; margin-left: 20px;">
+                        <label>Width</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" [matMenuTriggerFor]="menu">{{lengthType}}</button>
+                                <mat-menu #menu="matMenu">
+                                    <a class="dropdown-item" (click)="changelengthType('cm')">cm</a>
+                                    <a class="dropdown-item" (click)="changelengthType('inch')">inch</a>
+                                </mat-menu>
+                            </div>
+                            <input type="number" min="0" class="form-control" [(ngModel)]='package.width' (change)="calcPrice()" />
+                        </div>
+                    </div>
+                    <div class="form-group" style="width: 15%; margin-left: 20px;">
+                        <label>Height</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" [matMenuTriggerFor]="menu">{{lengthType}}</button>
+                                <mat-menu #menu="matMenu">
+                                    <a class="dropdown-item" (click)="changelengthType('cm')">cm</a>
+                                    <a class="dropdown-item" (click)="changelengthType('inch')">inch</a>
+                                </mat-menu>
+                            </div>
+                            <input type="number" min="0" class="form-control" [(ngModel)]='package.height' (change)="calcPrice()" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-2" style="height: fit-content; margin-top: 20px; margin-left: 10px;">
+                        <mat-form-field class="mat-form-field-fluid" style="width: 100%">
+                            <mat-select placeholder="Type" [(ngModel)]='package.type' (selectionChange)="calcPrice()">
+                                <mat-option *ngFor="let type of packageTypes" [value]="type.idpackageType">{{type.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <div class="row" style="margin-top: 35px;">
+                            <mat-icon *ngIf="i+1 == packages.length" style="cursor:pointer" (click)="addPackage()">add</mat-icon>
+                            <mat-icon style="cursor:pointer" (click)="deletePackage(package)">delete</mat-icon>
+                        </div>
+                    </div>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </mat-card-content>
+</mat-card>

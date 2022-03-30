@@ -1,0 +1,63 @@
+<!-- begin:: Page -->
+<ng-container *ngIf="selfLayout !== 'blank'; else blankLayout">
+	<!-- begin:: Header Mobile -->
+	<kt-header-mobile></kt-header-mobile>
+	<!-- end:: Header Mobile -->
+
+	<div class="d-flex flex-column flex-root h-100">
+		<!-- begin::Body -->
+		<div class="d-flex flex-row flex-column-fluid page">
+			<!-- begin:: Aside Left -->
+			<!-- <ng-container *ngIf="asideSelfDisplay">
+				<kt-aside-left></kt-aside-left>
+			</ng-container> -->
+			<!-- end:: Aside Left -->
+
+			<!--begin::Wrapper-->
+			<div class="d-flex flex-column flex-row-fluid wrapper" style="padding-left: 0px;" id="kt_wrapper">
+				<!-- begin:: Header -->
+				<kt-header></kt-header>
+				<!-- end:: Header -->
+
+				<!-- begin:: Content -->
+				<div class="content d-flex flex-column flex-column-fluid" id="kt_content" [ngClass]="contentClasses">
+					<!-- begin:: Content Head -->
+					<!-- <ng-container *ngIf="subheaderDisplay">
+						<kt-subheader></kt-subheader>
+					</ng-container> -->
+					<!-- end:: Content Head -->
+
+					<!-- begin:: Content Body -->
+					<!--begin::Entry-->
+					<div ktContentAnimate class="d-flex flex-column-fluid">
+						<!--begin::Container-->
+						<div [ngClass]="contentContainerClasses">
+							<router-outlet></router-outlet>
+							<!--end::Container-->
+						</div>
+					</div>
+					<!--end::Entry-->
+					<!-- end:: Content Body -->
+
+				</div>
+				<!-- end:: Content -->
+
+				<kt-footer></kt-footer>
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!-- end:: Body -->
+
+		<kt-quick-panel></kt-quick-panel>
+		<kt-quick-user-panel></kt-quick-user-panel>
+		<kt-scroll-top></kt-scroll-top>
+		<!-- <kt-sticky-toolbar></kt-sticky-toolbar> -->
+	</div>
+</ng-container>
+<!-- end:: Page -->
+
+<ng-template #blankLayout>
+	<div class="d-flex flex-column flex-root h-100">
+		<router-outlet></router-outlet>
+	</div>
+</ng-template>

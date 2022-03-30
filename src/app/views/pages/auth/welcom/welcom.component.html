@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="col" style="width: auto;margin-left: auto;margin-right: auto;height: fit-content;margin-top: 15%;">
+        <div class="row">
+            <img src="{{image_url}}" style="max-height: 100px !important;margin: auto;" />
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col">
+                <div style="text-align: center;font-size: 15px;padding: bottom 20px;">
+                    Gracias por registrarte. Ahora tienes tu dirección en miami para que realices tus compras con
+                    seguridad.
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </div>
+                <div style="text-align: center;" innerHTML={{content4}}></div>
+            </div>
+        </div>
+
+
+        <div class="row" style="margin-top: 40px;font-size: 18px;text-align: center;" *ngIf="showStatus == 1">
+            Gracias por registrarse. Para dar seguimiento de sus paquetes o realizar ordenes de domicilio por favor
+            descargue nuestra app.
+        </div>
+
+
+
+
+
+    </div>
+</div>
+<div class="row justify-content-center"
+    style="margin-top: 50px; width: fit-content; margin-left: auto;margin-right: auto; width: auto;"
+    *ngIf="showStatus == 1">
+
+    <img src="./assets/media/appstore.png" style="max-height: 50px;"
+        (click)="navigateUrl('https://apps.apple.com/us/app/aexpress/id1372868460')" />
+    <img src="./assets/media/googleplay.png" style="max-height: 50px; margin-left: 20px;"
+        (click)="navigateUrl('https://play.google.com/store/apps/details?id=com.aexpress.cargo')" />
+</div>

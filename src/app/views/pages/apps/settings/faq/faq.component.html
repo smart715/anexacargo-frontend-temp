@@ -1,0 +1,82 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <span>FAQ</span>
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button mat-raised-button color="primary" type="button" style="margin-right: 20px;" (click)="category()">
+                <span>Categories</span>
+            </button>
+            <button mat-raised-button color="primary" type="button" style="margin-right: 20px;" (click)="createFAQ()">
+                <span>Create</span>
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div class="row">
+            <div class="col-md-2">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Search" (keyup)="applyFilter($event.target.value)" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-2" style="margin-left: auto; margin-right: 20px;">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="Categories" (selectionChange)="filterByCategory($event.value)">
+                        <mat-option *ngFor='let category of categories' [value]="category.idfaqCategory">{{category.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- (onSelectionChange)="filterByCategory(category.idfaqCategory)" -->
+            </div>
+        </div>
+
+        <mat-table [dataSource]="dataSourceFAQ" matSort>
+
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                <mat-cell *matCellDef="let faq; let i = index" (click)="viewQuestion(faq)">{{faq.idfaq}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+                <mat-cell *matCellDef="let faq; let i = index" (click)="viewQuestion(faq)">{{faq.date}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="question">
+                <mat-header-cell *matHeaderCellDef>question</mat-header-cell>
+                <mat-cell *matCellDef="let faq; let i = index" (click)="viewQuestion(faq)">{{faq.question}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+                <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+                <mat-cell *matCellDef="let faq; let i = index" (click)="viewQuestion(faq)">
+                    {{getCategoryName(faq.idfaqCategory)}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                <mat-cell *matCellDef="let faq; let i = index" (click)="viewQuestion(faq)">
+                    <div style="width: fit-content;" *ngIf="faq.status == 0" class="status0">Published</div>
+                    <div style="width: fit-content;" *ngIf="faq.status == 1" class="status2"> InActive </div>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                <mat-cell *matCellDef="let faq; let i = index">
+                    <!-- <button mat-button color="primary" type="button">
+                        <mat-icon> edit</mat-icon>
+                    </button> -->
+                    <button mat-button color="primary" type="button" (click)="deleteFAQ(faq)">
+                        <mat-icon> delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50]" [length]="10" [showFirstLastButtons]="true"></mat-paginator>
+    </kt-portlet-body>
+</kt-portlet>

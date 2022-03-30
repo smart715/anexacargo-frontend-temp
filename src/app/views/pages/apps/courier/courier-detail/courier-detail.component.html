@@ -1,0 +1,176 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <div style="display: flex;" (click)="back()">
+                <mat-icon style="margin-top: 2px;">keyboard_arrow_left</mat-icon>
+                <div>Back</div>
+            </div>
+        </ng-container>
+        <!-- <ng-container ktPortletTools>
+            <div>AX0008</div>
+        </ng-container> -->
+    </kt-portlet-header>
+    <kt-portlet-body style="padding-left: 15px; padding-right: 15px;">
+        <div class="row">
+            <div class="col">
+                <div>Name</div>
+                <div><strong>{{order.customer}}</strong></div>
+            </div>
+            <div class="col">
+                <div style="text-align: right;">Pricing</div>
+                <div style="text-align: right;">Service Cost:&nbsp;<strong>{{order.serviceCost}}$</strong></div>
+                <div style="text-align: right;">Delivery Cost:&nbsp;<strong>{{order.deliveryCost}}$</strong></div>
+
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+            <div class="col">
+                <div>Order ID</div>
+                <div><strong>{{order.idwarehouseOrder}}</strong></div>
+            </div>
+        </div>
+        <!-- <div class="row" *ngIf="accepted == true">
+            <div class="col">
+                <div>Tracking</div>
+                <div><strong>AX0008</strong></div>
+            </div>
+        </div> -->
+        <!-- <div class="row" style="margin-top: 20px;">
+            <div class="col">
+                <div>Pickup Address</div>
+                <div><strong>{{order.pickUpAddress}}</strong></div>
+                <div style="color: cornflowerblue;">{{order.pickupAddressNote}}</div>
+            </div>
+        </div> -->
+        <div class="row" style="margin-top: 20px;">
+            <div class="col">
+                <div>Address</div>
+                <div><strong>{{order.formattedAddress}}</strong></div>
+                <div style="color: cornflowerblue;"><strong>Deliver to </strong>{{order.name}},<strong> call her at
+                    </strong>{{order.mobile}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div>Nombre</div>
+                <div><strong>{{order.name}}</strong></div>
+            </div>
+            <div class="col">
+                <div>Telefono</div>
+                <div><strong>{{order.mobile}}</strong></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" style="font-size: 15px; margin-top: 20px;">
+                Delivery Details(kg/cm)
+            </div>
+        </div>
+        <!-- <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="weight">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>W</mat-header-cell>
+                <mat-cell *matCellDef="let delivery">{{delivery.weight}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="volWeight">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Vol.</mat-header-cell>
+                <mat-cell *matCellDef="let delivery">{{delivery.volWeight}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="length">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>L</mat-header-cell>
+                <mat-cell *matCellDef="let delivery">{{delivery.length}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="width">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>W</mat-header-cell>
+                <mat-cell *matCellDef="let delivery">{{delivery.width}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="height">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>H</mat-header-cell>
+                <mat-cell *matCellDef="let delivery">{{delivery.height}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="tracking">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>tracking</mat-header-cell>
+                <mat-cell *matCellDef="let delivery">{{delivery.tracking}}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table> -->
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="tracking">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>tracking</mat-header-cell>
+                <mat-cell *matCellDef="let package">
+                    {{package.tracking}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="warehouse">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>warehouse</mat-header-cell>
+                <mat-cell *matCellDef="let package">
+                    {{package.warehouse}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="weight">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>weight</mat-header-cell>
+                <mat-cell *matCellDef="let package">{{package.weight}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="volWeight">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>volWeight</mat-header-cell>
+                <mat-cell *matCellDef="let package">{{package.volWeight}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="length">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>length</mat-header-cell>
+                <mat-cell *matCellDef="let package">{{package.length}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="width">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>width</mat-header-cell>
+                <mat-cell *matCellDef="let package">{{package.width}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="height">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>height</mat-header-cell>
+                <mat-cell *matCellDef="let package">{{package.height}}</mat-cell>
+            </ng-container>
+            <!-- <ng-container matColumnDef="typeName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+                <mat-cell *matCellDef="let package">{{package.typeName}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>status</mat-header-cell>
+
+                <mat-cell *matCellDef="let package">
+                    <div *ngIf="package.status == 0" class="status2"> Pendding </div>
+                    <div *ngIf="package.status == 1" class="status3"> Ready </div>
+                    <div *ngIf="package.status == 2" class="status0"> Delivery </div>
+                    <div *ngIf="package.status == 3" class="status1"> Completed </div>
+                </mat-cell>
+            </ng-container> -->
+            <!-- <ng-container matColumnDef="log">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>log</mat-header-cell>
+                <mat-cell *matCellDef="let package">
+                    <button mat-button (click)="log(package)"><mat-icon>search</mat-icon></button>
+                    <button mat-button (click)="print(package)"><mat-icon>print</mat-icon></button>
+                </mat-cell>
+            </ng-container> -->
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <div class="row" style="margin-left: auto;
+        margin-top: 20px;
+		margin-right: auto;
+		width: fit-content;">
+            <!-- <button *ngIf="order.packageStatus == '0'" mat-raised-button color="primary" type="button" style="margin-right:20px" (click)="edit()">
+				<span>Edit Order</span>
+            </button>
+            <button *ngIf="order.packageStatus == '0'" mat-raised-button color="primary" type="button" (click)="status()">
+				<span>Mark as Pick up</span>
+            </button> -->
+            <button mat-raised-button color="primary" type="button" (click)="final()">
+                <span>Mark as Delivered</span>
+            </button>
+        </div>
+    </kt-portlet-body>
+</kt-portlet>

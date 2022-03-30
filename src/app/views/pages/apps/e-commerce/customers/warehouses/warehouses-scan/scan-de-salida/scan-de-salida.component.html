@@ -1,0 +1,138 @@
+<kt-portlet>
+    <mat-card style="background: #1bc5bd;">
+        <div style="font-size: 24px;
+        color: white;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;">
+            SCAN DE SALIDA
+        </div>
+    </mat-card>
+    <kt-portlet-body>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-card>
+                    <mat-card-header>
+                        Tracking
+                    </mat-card-header>
+                    <div class="separator separator-dashed my-6"></div>
+                    <mat-card-content [formGroup]="scanForm">
+                        <mat-form-field class="mat-form-field-fluid" style="width: 80%;font-size: 50px;margin-left: auto;margin-right: auto;">
+                            <input #scanInput matInput placeholder="Scan by Tracking" formControlName="trackingControl" (keydown.enter)="scan($event)" />
+                        </mat-form-field>
+                        <div style="font-size: 50px;
+                        width: fit-content;
+                        margin-left: auto;
+                        margin-right: auto;
+                        margin-top: 30px;
+                        padding: 25px;
+                        margin-bottom: 30px;" class="status0" *ngIf="statusTitle == 'aceptado'; else elsetemp">
+                            {{statusTitle}}
+                        </div>
+                        <ng-template #elsetemp>
+                            <ng-container *ngIf="statusTitle != undefined">
+                                <div style="font-size: 50px;
+                                width: fit-content;
+                                margin-left: auto;
+                                margin-right: auto;
+                                margin-top: 30px;
+                                padding: 25px;
+                                margin-bottom: 30px;" class="status2">
+                                    {{statusTitle}}
+                                </div>
+                            </ng-container>
+                        </ng-template>
+
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="col-md-6">
+                <mat-card>
+                    <mat-card-header>
+                        SCAN LOG
+                    </mat-card-header>
+                    <div class="separator separator-dashed my-6"></div>
+                    <mat-card-content>
+                        <div class="row">
+                            <mat-form-field class="mat-form-field-fluid" style="margin-left: 20px;">
+                                <mat-select placeholder="Select Messenger" [(ngModel)]="idmessengers">
+                                    <!-- <mat-option value="0">Box</mat-option>
+                                <mat-option value="1">Container</mat-option> -->
+                                    <mat-option *ngFor="let messenger of messengers" [value]="messenger.idmessengers">
+                                        {{messenger.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <button style="width: 80px; height: 50%; margin-top:auto; margin-bottom: auto;margin-left: auto;margin-right: 20px;" mat-raised-button color="primary" type="button" (click)="publish()">
+                                <span>Publish</span>
+                            </button>
+
+                        </div>
+                        <div class="container">
+                            <div class="col" *ngFor="let scan of scannedLog">
+                                <div style="font-size: 18px; font-weight: bold; margin: 5px;">
+                                    {{scan.scannedWarehouse.customer}}&nbsp;|&nbsp;{{scan.scannedWarehouse.idcustomers}}
+                                </div>
+                                <ng-container *ngIf="scan.orderWarehouses.length != 0">
+                                    <div style="font-size: 16px; margin: 5px;">
+                                        <strong>Order&nbsp;{{scan.scannedWarehouse?.idwarehouseOrder}}&nbsp;warehouses</strong>
+                                    </div>
+                                    <div class="row" style="border-bottom: 1px solid black; width: 98%; margin: auto; margin-bottom: 7px; ">
+                                    </div>
+
+                                    <div class="row" style="    margin-left: 4px;" *ngFor="let warehouse of scan.orderWarehouses">
+                                        <ng-container *ngIf="warehouse.tracking">
+                                            <div style="width: 80%;">{{warehouse.tracking}}</div>
+                                            <ng-container *ngIf="checkScanned(warehouse); else temp">
+                                                <div style="background: #3699FF; color: #cbe2fe; text-align: center; border-radius: 10px; margin-left: auto; margin-right: 20px; width: 15px; height: 15px;margin: auto;font-size: 11px;">
+                                                    &#10003;
+                                                </div>
+                                            </ng-container>
+                                            <ng-template #temp>
+                                                <div style="background: grey; color: whitesmoke; text-align: center; border-radius: 10px; margin-left: auto; margin-right: 20px; width: 15px; height: 15px;margin: auto;font-size: 11px;">
+                                                    &#10003;
+                                                </div>
+                                            </ng-template>
+                                        </ng-container>
+                                    </div>
+                                    <div class="row" style="border-bottom: 1px solid black; width: 98%; margin: auto; margin-bottom: 7px; ">
+                                    </div>
+                                </ng-container>
+
+
+                                <div style="font-size: 16px; margin: 5px;" *ngIf="scan.readyWarehouses.length != 0"><strong>Others ready warehouses</strong>
+                                </div>
+                                <div class="row" *ngIf="scan.readyWarehouses.length != 0" style="border-bottom: 1px solid black; width: 98%; margin: auto; margin-bottom: 7px; ">
+                                </div>
+
+
+                                <div class="row" style="margin-left: 4px;" *ngFor="let warehouse of scan.readyWarehouses">
+                                    <ng-container *ngIf="warehouse.tracking">
+                                        <div style="width: 80%;">{{warehouse.tracking}}</div>
+                                        <ng-container *ngIf="checkScanned(warehouse); else temp">
+                                            <div style="background: #3699FF; color: #cbe2fe; text-align: center; border-radius: 10px; margin-left: auto; margin-right: 20px; width: 15px; height: 15px;margin: auto;font-size: 11px;">
+                                                &#10003;
+                                            </div>
+                                        </ng-container>
+                                        <ng-template #temp>
+                                            <div style="background: grey; color: whitesmoke; text-align: center; border-radius: 10px; margin-left: auto; margin-right: 20px; width: 15px; height: 15px;margin: auto;font-size: 11px;">
+                                                &#10003;
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </div>
+
+                                <div class="row" *ngIf="scan.readyWarehouses.length != 0" style="border-bottom: 1px solid black; width: 98%; margin: auto; margin-bottom: 7px; ">
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,30 @@
+<div class="card card-custom" [ngClass]="{ 'card-body-progress card-body-progress-overlay' : viewLoading }">
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{data.title}}</h3>
+		</div>
+	</div>
+	<div class="form">
+		<div class="card-body">
+			<div class="card-body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-lg-12">
+					{{viewLoading ? data.waitDesciption : data.description}}
+				</div>
+			</div>
+		</div>
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<button mat-button (click)="onNoClick()">Cancel</button>&nbsp;
+					<button mat-button (click)="onYesClick()" color="primary" cdkFocusInitial
+						[disabled]="viewLoading">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

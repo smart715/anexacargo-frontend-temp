@@ -1,0 +1,224 @@
+<kt-portlet>
+	<!-- <kt-portlet-header [class]="'card-head-lg'">
+		<ng-container ktPortletTitle>
+			<span>Warehouses</span>
+		</ng-container>
+		<ng-container ktPortletTools>
+			<button (click)="exportPending()" mat-button color="primary" type="button" style="margin-right: 20px;">
+				<mat-icon> table_chart</mat-icon>
+				Peachtree
+			</button>
+			<button (click)="exportToCSV()" mat-button color="primary" type="button" style="margin-right: 20px;">
+				<mat-icon> table_chart</mat-icon>
+				EXPORT
+			</button>
+			<button (click)="addCourier()" mat-raised-button color="primary" type="button" style="margin-right: 20px;">
+				<span>Add Courier</span>
+			</button>
+			<button mat-raised-button color="primary" type="button" style="margin-right: 20px;" (click)="scanReady()">
+				<span>Scan de Ready</span>
+			</button>
+			<button mat-raised-button color="primary" type="button" style="margin-right: 20px;" (click)="scanSalida()">
+				<span>Scan de Salidar</span>
+			</button>
+			<button mat-raised-button color="primary" type="button" (click)="scanEntrega()">
+				<span>Scan de Entrega</span>
+			</button>
+		</ng-container>
+	</kt-portlet-header> -->
+	<kt-portlet-body>
+		<div class="my-overlay" *ngIf="showOverlay">
+			<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+		</div>
+		<div class="row">
+
+			<!-- <div class="col-md-2">
+				<mat-form-field class="mat-form-field-fluid">
+					<input matInput placeholder="Search warehouse" (keyup)="applyFilter($event.target.value)" />
+					<mat-hint align="start">
+						<strong>Search</strong> by name, email or phone
+					</mat-hint>
+				</mat-form-field>
+			</div>
+
+			<div class="col-md-2">
+				<mat-form-field>
+					<mat-select [(value)]="filterStatus" (selectionChange)="filterBystatus()"
+						placeholder="Filter by Status">
+						<mat-option value="">
+							All
+						</mat-option>
+						<mat-option value="0">
+							Pending
+						</mat-option>
+						<mat-option value="1">
+							Ready
+						</mat-option>
+						<mat-option value="2">
+							Delivery
+						</mat-option>
+						<mat-option value="3">
+							Completed
+						</mat-option>
+						<mat-option value="4">
+							Cancelled
+						</mat-option>
+					</mat-select>
+					<mat-hint align="start">
+						<strong>Filter</strong> by Status
+					</mat-hint>
+				</mat-form-field>
+			</div> -->
+
+			<div class="col-md-2">
+				<mat-form-field>
+					<mat-select [(value)]="filterType" (selectionChange)="filterByType()" placeholder="Filter by Type">
+						<mat-option value="">
+							All
+						</mat-option>
+						<mat-option value="0">
+							Air
+						</mat-option>
+						<mat-option value="1">
+							Maritime
+						</mat-option>
+						<mat-option value="2">
+							China
+						</mat-option>
+					</mat-select>
+					<mat-hint align="start">
+						<strong>Filter</strong> by Type
+					</mat-hint>
+				</mat-form-field>
+			</div>
+
+			<div class="col-md-6" style="display: flex;">
+				<div [formGroup]="filterForm">
+					<mat-form-field style="margin-left: 20px;">
+						<mat-label>From</mat-label>
+						<input matInput [matDatepicker]="picker1" [(ngModel)]="dateFrom" formControlName="fromDate"
+							(dateChange)="dateFilter($event)">
+						<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+						<mat-datepicker #picker1></mat-datepicker>
+						<mat-hint align="start">
+							<strong>Filter</strong> by Date
+						</mat-hint>
+					</mat-form-field>
+					<mat-form-field style="margin-left: 20px;">
+						<mat-label>To</mat-label>
+						<input matInput [matDatepicker]="picker" [(ngModel)]="dateTo" formControlName="toDate"
+							(dateChange)="dateFilter($event)">
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker #picker></mat-datepicker>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div style="margin-top: 10px;" *ngIf="checkedFlag">
+					<button mat-raised-button color="warn" type="button" (click)="changeWarehousesStatus()">Change
+						Status</button>
+				</div>
+			</div>
+		</div>
+
+		<mat-table [dataSource]="dataSourceWarehouse" matSort (matSortChange)="getSortDate($event)">
+
+			<ng-container matColumnDef="check">
+				<mat-header-cell *matHeaderCellDef>
+					<mat-checkbox (change)="masterToggle()" [checked]="selection.hasValue() && isAllSelected()"
+						[indeterminate]="selection.hasValue() && !isAllSelected()">
+					</mat-checkbox>
+				</mat-header-cell>
+				<mat-cell *matCellDef="let warehouse">
+					<mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selfToggle(warehouse) : null"
+						[checked]="selection.isSelected(warehouse)">
+					</mat-checkbox>
+				</mat-cell>
+				<!-- <mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let warehouse">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selfToggle(warehouse) : null" [checked]="selection.isSelected(warehouse)">
+                    </mat-checkbox>
+                </mat-cell> -->
+			</ng-container>
+
+			<ng-container matColumnDef="idwarehouse">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+				<mat-cell *matCellDef="let warehouse" (click)="viewWarehouse(warehouse)">{{warehouse.idwarehouse}}
+				</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="idcustomers">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>AnexaID</mat-header-cell>
+				<mat-cell *matCellDef="let warehouse" (click)="viewWarehouse(warehouse)">{{warehouse.idcustomers}}
+				</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="customer">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Customer</mat-header-cell>
+				<mat-cell *matCellDef="let warehouse" (click)="viewWarehouse(warehouse)">{{warehouse.customer}}
+				</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="warehouse">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Tracking</mat-header-cell>
+				<mat-cell *matCellDef="let warehouse" (click)="viewWarehouse(warehouse)">
+					{{warehouse.tracking}}
+					<!-- <ng-container *ngIf="warehouse.type == 'China'; else elsetemp">{{warehouse.warehouse}}</ng-container>
+                    <ng-container #elsetemp> {{warehouse.tracking}}</ng-container> -->
+
+				</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="type">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+				<mat-cell *matCellDef="let warehouse" (click)="viewWarehouse(warehouse)">
+					{{warehouse.type}}
+				</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="price">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+				<mat-cell *matCellDef="let warehouse" (click)="viewWarehouse(warehouse)">{{warehouse.price}}</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="paid">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Paid</mat-header-cell>
+				<mat-cell *matCellDef="let warehouse" (click)="viewWarehouse(warehouse)">
+					{{warehouse.paid == '0' ? 'yes' : 'no'}}
+				</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="status">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+				<mat-cell *matCellDef="let warehouse" (click)="viewWarehouse(warehouse)">
+					<div style="width: fit-content;margin-right: auto;" *ngIf="warehouse.status == 0" class="status0">
+						Pending
+					</div>
+					<div style="width: fit-content;margin-right: auto;" *ngIf="warehouse.status == 1" class="status1">
+						Ready
+					</div>
+					<div style="width: fit-content;margin-right: auto;" *ngIf="warehouse.status == 2" class="status2">
+						Delivery
+					</div>
+					<div style="width: fit-content;margin-right: auto;" *ngIf="warehouse.status == 3" class="status3">
+						Completed
+					</div>
+					<div style="width: fit-content;margin-right: auto;" *ngIf="warehouse.status == 4" class="status4">
+						Cancelled
+					</div>
+				</mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+			<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+		</mat-table>
+		<mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 50, 100, 500]" [length]="10"
+			[showFirstLastButtons]="true" (page)="getServerData($event)"></mat-paginator>
+
+
+	</kt-portlet-body>
+</kt-portlet>

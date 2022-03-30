@@ -1,0 +1,48 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <span>News</span>
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button mat-raised-button color="primary" type="button" style="margin-right: 20px;" (click)="addNews()">
+                <mat-icon style="margin-top: 5px;"> add</mat-icon>
+                <span>Add News</span>
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div class="row">
+            <div class="col-md-2">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Search News" (keyup)="applyFilter($event.target.value)" />
+                    <mat-hint align="start">
+                        <strong>Search</strong> by keyword...
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <mat-table [dataSource]="dataSourceNews" matSort>
+
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>description</mat-header-cell>
+                <mat-cell *matCellDef="let news; let i = index">{{news.description}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef>date</mat-header-cell>
+                <mat-cell *matCellDef="let news; let i = index">{{news.date}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef>action</mat-header-cell>
+                <mat-cell *matCellDef="let news; let i = index"></mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50]" [length]="10" [showFirstLastButtons]="true"></mat-paginator>
+    </kt-portlet-body>
+</kt-portlet>

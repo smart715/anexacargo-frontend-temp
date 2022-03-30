@@ -1,0 +1,38 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <span>{{title}}</span>
+        </ng-container>
+        <ng-container ktPortletTools>
+
+            <button mat-raised-button color="primary" type="button" style="margin-right: 20px;" (click)="save()">
+                <span>Save</span>
+            </button>
+            <button mat-button color="primary" type="button" [matMenuTriggerFor]="menu">
+                <span style="width: fit-content;" *ngIf="faq.status == 0" class="status0">Published</span>
+                <span style="width: fit-content;" *ngIf="faq.status == 1" class="status2"> InActive </span>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="menuChange($event)" class="status0">Published</button>
+                <button mat-menu-item (click)="menuChange($event)" class="status2">InActive</button>
+            </mat-menu>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div class="row" [formGroup]="questionForm">
+            <div class="col-md-8">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Question" formControlName="question" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-2" style="margin-left: auto; margin-right: 20px;">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="Categories" formControlName="category">
+                        <mat-option *ngFor='let category of categories' [value]="category.idfaqCategory">{{category.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <ckeditor [editor]="Editor" [(ngModel)]="ckdata"></ckeditor>
+    </kt-portlet-body>
+</kt-portlet>

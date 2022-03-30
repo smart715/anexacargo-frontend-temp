@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-md-2">
+        <mat-form-field class="mat-form-field-fluid">
+            <input matInput placeholder="Search order" (keyup)="applyFilter($event.target.value)" />
+            <mat-hint align="start">
+                <strong>Search</strong> in all fields
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="col-md-2">
+        <mat-form-field>
+            <mat-select [(value)]="filterStatus" (selectionChange)="filterBystatus()" placeholder="Filter by Status">
+                <mat-option value="">All</mat-option>
+                <mat-option value="0">Active</mat-option>
+                <mat-option value="1">InActive</mat-option>
+            </mat-select>
+            <mat-hint align="start">
+                <strong>Filter</strong> by Status
+            </mat-hint>
+        </mat-form-field>
+    </div>
+</div>
+<mat-table [dataSource]="dataSourceOrders" matSort>
+    <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+        <mat-cell *matCellDef="let order">
+            <mat-checkbox></mat-checkbox>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+        <mat-cell *matCellDef="let order; let i = index" (click)="vieworder(order)">{{order.idorders}}</mat-cell>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="tracking">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Tracking</mat-header-cell>
+        <mat-cell *matCellDef="let order" (click)="vieworder(order)">{{order.tracking}}</mat-cell>
+    </ng-container> -->
+
+    <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+        <mat-cell *matCellDef="let order" (click)="vieworder(order)">{{order.date}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>weight</mat-header-cell>
+        <mat-cell *matCellDef="let order" (click)="vieworder(order)">{{order.weight}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="volweight">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>volweight</mat-header-cell>
+        <mat-cell *matCellDef="let order" (click)="vieworder(order)">{{order.volWeight}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>cost</mat-header-cell>
+        <mat-cell *matCellDef="let order" (click)="vieworder(order)">{{order.cost}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="assignedTo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>assignedTo</mat-header-cell>
+        <mat-cell *matCellDef="let order" (click)="vieworder(order)">{{order.assignedTo}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+        <mat-cell *matCellDef="let order" (click)="vieworder(order)">
+            <!-- <div *ngIf="order.status == 0" class="status3">
+            Active
+        </div>
+        <div *ngIf="order.status == 1" class="status2">
+            InActive
+        </div> -->
+            <div style="width: fit-content;margin-left: auto;" *ngIf="order.status == 0" class="status0"> Pending </div>
+            <div style="width: fit-content;margin-left: auto;" *ngIf="order.status == 1" class="status1"> In Progress </div>
+            <div style="width: fit-content;margin-left: auto;" *ngIf="order.status == 2" class="status2"> completed </div>
+            <div style="width: fit-content;margin-left: auto;" *ngIf="order.status == 3" class="status3"> cancelled </div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let order">
+            <!-- <ng-template ngxPermissionsOnly="canEditECommerceData">
+                <button mat-icon-button color="primary" matTooltip="Edit order"
+                    (click)="editorder(order)">
+                    <mat-icon>create</mat-icon>
+                </button>&nbsp;
+            </ng-template> -->
+
+            <ng-template ngxPermissionsOnly="canDeleteECommerceData">
+                <button mat-icon-button color="warn" matTooltip="Delete order" type="button" (click)="deleteorder(order)">
+                    <mat-icon>delete</mat-icon>
+                </button>&nbsp;
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50]" [length]="10" [showFirstLastButtons]="true"></mat-paginator>

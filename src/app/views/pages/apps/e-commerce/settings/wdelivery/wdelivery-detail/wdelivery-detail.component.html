@@ -1,0 +1,44 @@
+<mat-card>
+    <mat-card-header>
+        <span style="font-size: x-large;">WDelivery</span>
+        <button mat-raised-button color="white" type="button" style="margin-left: auto;
+        width: 90px;
+        margin-right: 20px;" (click)="cancel()">
+            <span>Cancel</span>
+        </button>
+        <button mat-raised-button color="primary" type="button" style="width: 90px;" (click)="save()">
+            <mat-icon style="margin-top: 4px;">save</mat-icon>
+            <span>Save</span>
+        </button>
+    </mat-card-header>
+    <div class="separator separator-dashed my-6"></div>
+    <mat-card-content>
+
+        <form class="card-body" [formGroup]="groupForm">
+
+            <div class="row">
+                <mat-form-field class="mat-form-field-fluid" style="margin-right: 20px;">
+                    <input matInput placeholder="Enter Name" formControlName="name" />
+                    <mat-error>Name is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Name</strong>
+                    </mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fluid" style="margin-right: 20px;">
+                    <input matInput placeholder="Enter Weight Price" formControlName="price" />
+                    <mat-error>Price
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Price</strong>
+                    </mat-hint>
+                </mat-form-field>
+
+            </div>
+        </form>
+
+    </mat-card-content>
+</mat-card>

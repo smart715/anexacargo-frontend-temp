@@ -1,0 +1,101 @@
+<mat-card>
+    <mat-card-header>
+        <button style="margin-left: auto; margin-right: 20px;" type="button" mat-raised-button color="primary" (click)="addState()">
+                        Add State
+                    </button>
+        <button type="button" mat-raised-button color="primary" (click)="addArea()">
+                        Add Area
+                    </button>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-table [dataSource]="dataSourceStates" matSort>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                <mat-cell *matCellDef="let state">{{state.name}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="areas">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Areas</mat-header-cell>
+                <mat-cell *matCellDef="let state">{{state.areasNum}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                <mat-cell *matCellDef="let state">
+                    <ng-container *ngIf="state.status == '0'">
+                        <div class="status3">Active</div>
+                    </ng-container>
+                    <ng-container *ngIf="state.status == '1'">
+                        <div class="status1">InActive</div>
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                <mat-cell *matCellDef="let state">
+                    <mat-icon style="cursor: pointer;" (click)="stateChange(state)">library_books</mat-icon>
+                    <mat-icon style="cursor: pointer;" (click)="editState(state)">edit</mat-icon>
+                    <mat-icon style="cursor: pointer;" *ngIf="state.status == 1 && state.areasNum == 0" (click)="deleteState(state)">delete_forever</mat-icon>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumnsStates"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumnsStates"></mat-row>
+        </mat-table>
+        <div class="separator separator-dashed my-6"></div>
+
+        <div class="row">
+            <mat-form-field class="mat-form-field-fluid" style="width: 200px;margin-left: 24px;">
+                <mat-select placeholder="Customer Group" [(ngModel)]='idcustomerGroup' (selectionChange)="customerGroupChange()">
+                    <mat-option *ngFor="let customerGroup of customerGroups" [value]="customerGroup.idcustomerGroup">{{customerGroup.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-fluid" style="margin-left: 20px;">
+                <input style="color: black;" matInput placeholder="State" [value]="state?.name" disabled/>
+            </mat-form-field>
+        </div>
+
+        <mat-table [dataSource]="dataSourceAreas" matSort>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                <mat-cell *matCellDef="let area">{{area.name}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="basePrice">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Base Price</mat-header-cell>
+                <mat-cell *matCellDef="let area">{{area.basePrice}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="extraRV">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Extra RV</mat-header-cell>
+                <mat-cell *matCellDef="let area">{{area.extraRV}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="extraRW">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Extra RW</mat-header-cell>
+                <mat-cell *matCellDef="let area">{{area.extraRW}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="pickup">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Pickup</mat-header-cell>
+                <mat-cell *matCellDef="let area">{{area.pickup}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                <mat-cell *matCellDef="let area">
+                    <ng-container *ngIf="area.status == '0'">
+                        <div class="status3">Active</div>
+                    </ng-container>
+                    <ng-container *ngIf="area.status == '1'">
+                        <div class="status1">InActive</div>
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                <mat-cell *matCellDef="let area">
+                    <mat-icon style="cursor: pointer;" (click)="editArea(area)">edit</mat-icon>
+                    <mat-icon style="cursor: pointer;" *ngIf="area.status == 1" (click)="deleteArea(area)">delete_forever</mat-icon>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumnsAreas"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumnsAreas"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>

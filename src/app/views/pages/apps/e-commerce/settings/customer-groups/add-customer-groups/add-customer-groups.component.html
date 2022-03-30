@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-header>
+        <div style="height: fit-content; margin-top: auto;">Customer Group</div>
+        <button style="margin-left: auto;" type="button" mat-raised-button color="primary" (click)="add()">
+            {{buttonName}}
+        </button>
+    </mat-card-header>
+    <div class="separator separator-dashed my-6"></div>
+    <mat-card-content>
+        <form class="card-body" [formGroup]="customerGroupForm">
+            <mat-form-field class="mat-form-field-fluid">
+                <input matInput placeholder="Enter Customer Group" formControlName="customerGroup"/>
+                <mat-error>Customer Group is
+                    <strong>required</strong>
+                </mat-error>
+                <mat-hint align="start">Please enter
+                    <strong>Customer Group</strong>
+                </mat-hint>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,70 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/app
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+/adminddd
+# dependencies
+/node_modules
+/angular
+node_modules.rar
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin.json
+/src(1).rar
+e2e/
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# assets
+# /src/assets
+
+# System Files
+.DS_Store
+Thumbs.db
+.git_
+*.zip
+test
+/src/assets
+
+admin/
+client/
+aexpress-admin().rar
+aexpress-admin.rar
+qwe/
+src.rar
+src/uploads/
+wewer/
+odl src/

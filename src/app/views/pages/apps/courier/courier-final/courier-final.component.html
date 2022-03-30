@@ -1,0 +1,54 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <div style="display: flex;" (click)="back()">
+                <mat-icon style="margin-top: 2px;">keyboard_arrow_left</mat-icon>
+                <div>Back</div>
+            </div>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body style="padding-left: 15px; padding-right: 15px;">
+        <div>Who receive</div>
+        <!-- <div style="width: 100%; height: 70px; font-size: 40px; border: black 2px solid; padding-left: 20px; margin-top: 10px">{{order.deliveryName}}</div> -->
+        <mat-form-field class="mat-form-field-fluid" style="width: 220px">
+            <input matInput placeholder="" [(ngModel)]="order.deliveryName" />
+        </mat-form-field>
+
+        <div style="margin-top: 20px;">Notes(optional)</div>
+        <mat-form-field style="width: 100%;">
+            <textarea matInput placeholder="" [(ngModel)]="detail"></textarea>
+        </mat-form-field>
+
+        <div class="col" style="margin-left: -12px;">
+            <div>
+                <span>Select Image</span>
+            </div>
+            <div>
+                <label class="image-upload-container btn btn-bwm">
+                    <input #imageInput
+                        type="file"
+                        accept="image/*"
+                        (change)="processFile(imageInput)">
+                </label>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <div class="row" style="margin-left: auto;
+        margin-top: 20px;
+		margin-right: auto;
+		width: fit-content;">
+            <button mat-raised-button color="primary" type="button" (click)="signature()">
+				<span>Save</span>
+			</button>
+        </div>
+    </kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,30 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <span>FAQ Categories</span>
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button style="margin-left: auto;" type="button" mat-raised-button color="primary" (click)="add()">
+                Add
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                <mat-cell *matCellDef="let faq">{{faq.name}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                <mat-cell *matCellDef="let faq">
+                    <mat-icon style="cursor: pointer;" (click)="edit(faq)">edit</mat-icon>
+                    <mat-icon style="cursor: pointer;" (click)="delete(faq)">delete</mat-icon>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+    </kt-portlet-body>
+</kt-portlet>

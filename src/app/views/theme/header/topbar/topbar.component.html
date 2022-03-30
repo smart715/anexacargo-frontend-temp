@@ -1,0 +1,46 @@
+<!-- begin:: Header Topbar -->
+<ng-container>
+  <!-- <ng-container *ngIf="searchDisplay">
+    <kt-search-dropdown  [icon]="'./assets/media/svg/icons/General/Search.svg'" [useSVG]="true"></kt-search-dropdown>
+  </ng-container>
+
+  <ng-container *ngIf="notificationsDisplay">
+      <kt-notification [bgImage]="'./assets/media/misc/bg-1.jpg'" [pulse]="true" [skin]="'dark'" [icon]="'./assets/media/svg/icons/Code/Compiling.svg'" [useSVG]="true"></kt-notification>
+  </ng-container>
+
+  <ng-container *ngIf="quickActionsDisplay">
+	  <kt-quick-action [bgImage]="'./assets/media/misc/bg-2.jpg'" [skin]="'dark'" [icon]="'./assets/media/svg/icons/Media/Equalizer.svg'" [useSVG]="true"></kt-quick-action>
+  </ng-container>
+
+  <ng-container *ngIf="cartDisplay">
+    <kt-cart [bgImage]="'./assets/media/misc/bg-1.jpg'" [icon]="'./assets/media/svg/icons/Shopping/Cart3.svg'" [useSVG]="true"></kt-cart>
+  </ng-container>
+
+  <ng-container *ngIf="quickPanelDisplay">
+    <div class="topbar-item" ngbTooltip="Quick panel">
+      <div class="btn btn-icon btn-clean btn-lg mr-1" id="kt_quick_panel_toggle">
+          <span class="svg-icon svg-icon-xl svg-icon-primary" [inlineSVG]="'./assets/media/svg/icons/Layout/Layout-4-blocks.svg'"></span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="languagesDisplay">
+    <kt-language-selector></kt-language-selector>
+  </ng-container> -->
+
+  <button mat-button (click)="signOut()">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+
+  <ng-container *ngIf="userDisplay">
+    <ng-container *ngIf="userLayout === 'dropdown'">
+      <kt-user-profile [userDropdownStyle]="userDropdownStyle"></kt-user-profile>
+    </ng-container>
+    <ng-container *ngIf="userLayout === 'offcanvas'">
+      <!--begin: User bar -->
+      <kt-user-profile4></kt-user-profile4>
+      <!--end: User bar -->
+    </ng-container>
+  </ng-container>
+</ng-container>
+<!-- end:: Header Topbar -->

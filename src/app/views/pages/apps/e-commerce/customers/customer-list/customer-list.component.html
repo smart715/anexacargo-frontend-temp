@@ -1,0 +1,124 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <span>Customers list</span>
+            <span style="margin-left: 10px; margin-right: 10px;">|</span>
+            <span>Total</span>
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button (click)="exportToExcel()" mat-button color="primary" type="button">
+                <mat-icon> table_chart</mat-icon>
+            </button>
+            <button (click)="addCustomer()" mat-raised-button color="primary" type="button">
+                <span>New Customer</span>
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div class="my-overlay" *ngIf="showOverlay">
+          <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Search customer" (keyup)="applyFilter($event.target.value)" />
+                    <mat-hint align="start">
+                        <strong>Search</strong> in all fields
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field>
+                    <mat-select [(value)]="filterStatus" (selectionChange)="filterBystatus()" placeholder="Filter by Status">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="0">Active</mat-option>
+                        <mat-option value="1">InActive</mat-option>
+                    </mat-select>
+                    <mat-hint align="start">
+                        <strong>Filter</strong> by Status
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-table [dataSource]="dataSourceCustomer" matSort>
+
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                <mat-cell *matCellDef="let customer; let i = index" (click)="viewCustomer(customer)">{{customer.indexcustomer}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="firstName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</mat-header-cell>
+                <mat-cell *matCellDef="let customer" (click)="viewCustomer(customer)">{{customer.firstName}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="lastName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Lastname</mat-header-cell>
+                <mat-cell *matCellDef="let customer" (click)="viewCustomer(customer)">{{customer.lastName}}</mat-cell>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="company">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Company</mat-header-cell>
+                <mat-cell *matCellDef="let customer" (click)="viewCustomer(customer)">{{customer.company}}</mat-cell>
+            </ng-container> -->
+            <ng-container matColumnDef="registered">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Registered</mat-header-cell>
+                <mat-cell *matCellDef="let customer" (click)="viewCustomer(customer)">{{customer.register}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                <mat-cell *matCellDef="let customer" (click)="viewCustomer(customer)">
+                    <div *ngIf="customer.status == 0" class="status3">
+                        Active
+                    </div>
+                    <div *ngIf="customer.status == 1" class="status2">
+                        InActive
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                <mat-cell *matCellDef="let customer">
+                    <ng-template ngxPermissionsOnly="canEditECommerceData">
+                        <button mat-icon-button color="primary" matTooltip="Edit customer"
+                            (click)="editCustomer(customer)">
+                            <mat-icon>create</mat-icon>
+                        </button>&nbsp;
+                    </ng-template>
+
+                    <ng-template ngxPermissionsOnly="canDeleteECommerceData">
+                        <button mat-icon-button color="warn" type="button"
+                            (click)="deleteCustomer(customer)">
+                            <mat-icon>delete</mat-icon>
+                        </button>&nbsp;
+                    </ng-template>
+
+                    <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More actions">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>dialpad</mat-icon>
+                            <span>Redial</span>
+                        </button>
+                        <button mat-menu-item disabled>
+                            <mat-icon>voicemail</mat-icon>
+                            <span>Check voicemail</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>notifications_off</mat-icon>
+                            <span>Disable alerts</span>
+                        </button>
+                    </mat-menu>
+                </mat-cell>
+            </ng-container> -->
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="perPageSize" [pageSizeOptions]="[10, 50, 100, 500]" [length]="10" [showFirstLastButtons]="true" (page)="getServerData($event)"></mat-paginator>
+    </kt-portlet-body>
+</kt-portlet>

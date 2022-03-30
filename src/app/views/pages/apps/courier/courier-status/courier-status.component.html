@@ -1,0 +1,44 @@
+<kt-portlet>
+	<kt-portlet-header [class]="'card-head-lg'">
+		<ng-container ktPortletTitle>
+			<div class="col-md-12 kt-margin-bottom-10-mobile" style="display: flex;">
+				<mat-icon style="margin-top: auto; margin-bottom: auto;">search</mat-icon>
+				<mat-form-field class="mat-form-field-fluid" style="width: 220px">
+					<input matInput placeholder="Search by Order or Tracking" #searchInput />
+				</mat-form-field>
+			</div>
+		</ng-container>
+    </kt-portlet-header>
+	<kt-portlet-body style="padding-left: 15px; padding-right: 15px;">
+
+        <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+            {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+        </button> -->
+        <mat-vertical-stepper [linear]="isLinear" #stepper>
+        <mat-step>
+            <ng-template matStepLabel><div>Creado</div><div>02/02/20  3:38pm</div></ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel><div>Recibido</div><div>02/02/20  3:38pm</div></ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel><div>Enviado</div><div>02/02/20  3:38pm</div></ng-template>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel><div>Entregado</div><div>02/02/20  3:38pm</div></ng-template>
+        </mat-step>
+        </mat-vertical-stepper>
+
+
+
+
+
+		<div class="row" style="margin-left: auto;
+		margin-right: auto;
+		width: fit-content;">
+			<button mat-raised-button color="primary" type="button" (click)="accept()">
+				<span>Aceptar</span>
+			</button>
+		</div>
+    </kt-portlet-body>
+</kt-portlet>

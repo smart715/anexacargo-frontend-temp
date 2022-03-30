@@ -1,0 +1,91 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <div>Invoice</div>
+            <mat-form-field *ngIf="!editFlag" class="mat-form-field-fluid" style="margin-left: 25px;">
+                <input type="text" placeholder="Customer" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.firstName" (onSelectionChange)="customerChange(option)">
+                        {{option.firstName}}&nbsp;&nbsp;&nbsp;{{option.lastName}}&nbsp;|&nbsp;{{option.company}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <div *ngIf="editFlag">&nbsp;&nbsp;&nbsp;{{invoice.customer}}</div>
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button mat-raised-button type="button" color="primary" (click)="publish()">
+                Save
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <mat-card>
+            <mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        {{row.description}}
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="price">
+                    <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        {{row.price}}
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                    <mat-cell *matCellDef="let row;  let i = index">
+                        <button mat-button type="button" (click)="delete(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            </mat-table>
+            <div *ngIf="!addFlag" class="row" style="width: fit-content;margin-left: auto;margin-right: 20px;">
+                <button mat-button type="button" (click)="tryAdd()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <div *ngIf="addFlag" class="row" [formGroup]="invoicedOrderForm">
+                <mat-form-field class="mat-form-field-fluid" style="margin-left: 36px;width: 44%;">
+                    <input matInput placeholder="Description" formControlName="description" />
+                    <mat-error>Description is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Description</strong>
+                    </mat-hint>
+                </mat-form-field>
+                <mat-form-field class="mat-form-field-fluid" style="margin-left: 3%;width: 40%;">
+                    <input matInput placeholder="Enter Price" formControlName="price" type="number" min="0" />
+                    <mat-error>Price is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Price</strong>
+                    </mat-hint>
+                </mat-form-field>
+                <button mat-button type="button" (click)="add()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <table style="margin-left: 47%; width: 53%;">
+                <tr>
+                    <td>Sub Total</td>
+                    <td style="padding-left: 77%;">{{subtotal}}</td>
+                </tr>
+                <tr>
+                    <td>itbms</td>
+                    <td style="padding-left: 77%;">{{itbms}}</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td style="padding-left: 77%;">{{total}}</td>
+                </tr>
+            </table>
+        </mat-card>
+    </kt-portlet-body>
+</kt-portlet>

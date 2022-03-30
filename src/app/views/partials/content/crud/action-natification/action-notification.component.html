@@ -1,0 +1,16 @@
+<div class="mat-snackbar">
+	<div class="mat-snackbar-message">{{data.message}}</div>
+	<div class="mat-snackbar-btn">
+		<button *ngIf="data.showUndoButton" type="button" mat-button color="primary" (click)="onDismissWithAction()">
+			Undo
+		</button>
+	</div>
+	<div class="mat-snackbar-close">
+		<button *ngIf="data.showCloseButton" 
+			mat-icon-button 
+			(click)="onDismiss()"
+			color="warn">
+			<mat-icon>clear</mat-icon>
+		</button>
+	</div>
+</div>

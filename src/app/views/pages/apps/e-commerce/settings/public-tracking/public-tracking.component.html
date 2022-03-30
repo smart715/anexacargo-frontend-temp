@@ -1,0 +1,94 @@
+<mat-card>
+    <div class="container" [formGroup]="scanForm">
+        <div class="row">
+            <img style="margin-top: 2vh; width: 20%; margin-left: auto; margin-right: auto;" src="{{image_url}}" />
+        </div>
+        <!-- <div class="row" style="height: 14vh; border: 1px solid; margin-top: 5vh;">
+            Tracking
+        </div> -->
+        <mat-form-field class="mat-form-field-fluid"
+            style="width: 600px;font-size: 35px;margin-left: auto;margin-right: auto;">
+            <input #scanInput matInput placeholder="ingrese su número de tracking..." formControlName="idControl"
+                (keydown.enter)="track()" [(ngModel)]="trackingID" />
+        </mat-form-field>
+        <mat-horizontal-stepper [linear]="isLinear" #stepper *ngIf="stepperFlag">
+            <mat-step>
+                <ng-template matStepLabel>
+                    <div>orden aceptado</div>
+                    <div>{{accepted == 'undefined' ? '' : accepted}}</div>
+                </ng-template>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>
+                    <div>recibido</div>
+                    <div>{{pickedUp == 'undefined' ? '' : pickedUp}}</div>
+                </ng-template>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>
+                    <div>Enviado</div>
+                    <div>{{bodega == 'undefined' ? '' : bodega}}</div>
+                </ng-template>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>
+                    <div>Entregado</div>
+                    <div>{{porEntregar == 'undefined' ? '' : porEntregar}}</div>
+                </ng-template>
+            </mat-step>
+        </mat-horizontal-stepper>
+         <div style="
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 30px;
+        margin-bottom: 30px;">
+        <i aria-hidden="true" class="fa fa-spinner fa-spin" style="font-size: 100px;" *ngIf="loader=='true'"></i>
+        </div>
+        <div style="font-size: 50px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 30px;
+        padding: 25px;
+        margin-bottom: 30px;" class="status2" *ngIf="statusTitle != undefined">
+            {{statusTitle}}
+            <p>{{statusText}}</p>
+        </div>
+        <div style="font-size: 50px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 30px;
+        padding: 25px;
+        margin-bottom: 30px;" class="status3" *ngIf="statusTitleReady != undefined">
+            {{statusTitleReady}}
+            <p style="font-size: 20px;">{{statusTextReady}}</p>
+
+        </div>
+        <div class="row" style="width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 18vh;">
+            <button mat-raised-button color="primary" type="button" (click)="track()">
+                <span>Buscar</span>
+            </button>
+        </div>
+
+        <!-- <div class="row">
+            <div class="text-dark-50 text-hover-primary my-3 mr-2" id="kt_login_forgot"
+                style="display: flex; cursor: pointer;">
+                <div>
+                    Already have an account?
+                </div>
+                <div style="margin-left: 10px;">
+                    Sign in
+                </div>
+            </div>
+            <div class="text-dark-50 text-hover-primary my-3 mr-2" id="kt_login_forgot"
+                style="margin-left: auto; cursor: pointer;">
+                Create an account?
+            </div>
+        </div> -->
+    </div>
+</mat-card>

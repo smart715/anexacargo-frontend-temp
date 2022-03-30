@@ -1,0 +1,18 @@
+<mat-card>
+    <mat-card-header style="font-size: 15px;">
+        <strong>Add News</strong>
+        <button style="margin-left: auto; margin-right: 20px;" mat-raised-button color="primary" type="button" (click)="addNews()">
+            <mat-icon style="margin-top: 5px;"> add</mat-icon>
+            <span>Add News</span>
+        </button>
+    </mat-card-header>
+    <mat-card-content [formGroup]="newsForm">
+        <div class="separator separator-dashed my-6"></div>
+        <mat-form-field class="mat-form-field-fluid" style="width: 95%; margin-left: 20px;">
+            <input matInput placeholder="Write description here..." formControlName="description" />
+        </mat-form-field>
+        <!-- <ckeditor [editor]="Editor" (change)="onChange($event)"></ckeditor> -->
+        <!-- <ckeditor id="ownEditor"></ckeditor> -->
+        <div id="editor"></div>
+    </mat-card-content>
+</mat-card>

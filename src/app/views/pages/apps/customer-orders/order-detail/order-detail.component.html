@@ -1,0 +1,106 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            Order &nbsp;&nbsp;&nbsp; {{order.idorders}} &nbsp;&nbsp;&nbsp; {{order.date}}
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <mat-card>
+            <mat-card-header>
+                Directions
+            </mat-card-header>
+            <div class="separator separator-dashed my-6"></div>
+            <mat-card-content style="display: grid; margin-left: 30px;">
+                <div class="row">
+                    <div class="col">
+                        <div>Pickup Address</div>
+                        <div><strong>{{order.pickUpAddress}}</strong></div>
+                        <div style="color: blue;"><strong>custom notes about pickup</strong></div>
+                    </div>
+                    <div class="col">
+                        <div>Delivery Address</div>
+                        <div><strong>{{order.deliveryAddress}}</strong></div>
+                        <div style="color: blue;"><strong>Deliver to {{order.deliveryName}}, call her at {{order.deliveryPhone}}</strong></div>
+                    </div>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+        <mat-card style="margin-top: 30px;">
+            <mat-card-header>
+                <span>Packages = {{order.items}}</span>
+            </mat-card-header>
+            <div class="separator separator-dashed my-6"></div>
+            <mat-card-content>
+                <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="weight">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>weight</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.weight}}{{package.weightUnit}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="volWeight">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>volWeight</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.volWeight}}{{package.weightUnit}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="length">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>length</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.length}}{{package.lengthUnit}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="width">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>width</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.width}}{{package.lengthUnit}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="height">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>height</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.height}}{{package.lengthUnit}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="type">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>type</mat-header-cell>
+                        <!-- <mat-cell *matCellDef="let package">{{package.type=='0'?'box':'container'}}</mat-cell> -->
+                        <mat-cell *matCellDef="let package">{{package.typeName}}</mat-cell>
+
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                </mat-table>
+            </mat-card-content>
+        </mat-card>
+        <mat-card style="margin-top: 30px;">
+            <mat-card-header>
+                <div>Order History</div>
+                <button mat-raised-button color="primary" type="button" style="margin-left: auto;" (click)="deliveryProof()">
+                    <span>Delivery Proof</span>
+                </button>
+            </mat-card-header>
+            <div class="separator separator-dashed my-6"></div>
+            <mat-card-content style="display: grid; margin-left: 30px;">
+                <mat-horizontal-stepper [linear]="isLinear" #stepper>
+                    <mat-step>
+                        <ng-template matStepLabel>
+                            <div>orden aceptado</div>
+                            <div>{{accepted == 'undefined' ? '' : accepted}}</div>
+                        </ng-template>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>
+                            <div>recibido</div>
+                            <div>{{pickedUp == 'undefined' ? '' : pickedUp}}</div>
+                        </ng-template>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>
+                            <div>Enviado</div>
+                            <div>{{bodega == 'undefined' ? '' : bodega}}</div>
+                        </ng-template>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>
+                            <div>Entregado</div>
+                            <div>{{porEntregar == 'undefined' ? '' : porEntregar}}</div>
+                        </ng-template>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </mat-card-content>
+        </mat-card>
+    </kt-portlet-body>
+</kt-portlet>

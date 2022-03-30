@@ -1,0 +1,163 @@
+<div class="card card-custom">
+    <kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+        Pleaes input all fields correctly!
+    </kt-alert>
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">New Customer</h3>
+        </div>
+        <div style="height: fit-content;
+        margin-top: auto;
+        margin-bottom: auto;">
+            <button type="button" mat-raised-button color="primary" (click)="close()" style="height: 36px; margin-top: auto; margin-bottom: auto;">
+                Cancel
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" mat-raised-button color="primary" (click)="save()" style="height: 36px; margin-top: auto; margin-bottom: auto;">
+                Save
+            </button>
+        </div>
+    </div>
+
+    <form class="card-body" [formGroup]="customerForm">
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Enter First Name" formControlName="firstName" />
+                    <mat-error>First Name is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>First Name</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Enter Last Name" formControlName="lastName" />
+                    <mat-error>Last Name is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Last Name</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input type="email" matInput placeholder="Enter Email" formControlName="email" />
+                    <mat-error>Email is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Email</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Enter MobileNumber" formControlName="mobile" />
+                    <mat-error>MobileNumber is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>MobileNumber</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Enter PhoneNumber" formControlName="phone" />
+                    <mat-error>PhoneNumber is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>PhoneNumber</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div> -->
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Enter PersonalID" formControlName="personalID" />
+                    <mat-error>PersonalID is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>PersonalID</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="Customer Group" formControlName="type">
+                        <mat-option *ngFor="let customerGroup of customerGroups" [value]="customerGroup.idcustomerGroup">{{customerGroup.name}}</mat-option>
+                    </mat-select>
+                    <mat-hint align="start">
+                        <strong>Customer Group</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="WGroup" formControlName="wGroup">
+                        <mat-option *ngFor="let wGroup of WGroups" [value]="wGroup.idwGroup">{{wGroup.name}}</mat-option>
+                    </mat-select>
+                    <mat-hint align="start">
+                        <strong>WGroups</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Enter CompanyName" formControlName="company" />
+                    <mat-error>Company is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Company</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div> -->
+        </div>
+        <div class="row" style="margin-top:20px">
+            <!-- <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="R.U.C" formControlName="ruc" />
+                    <mat-error>R.U.C is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>R.U.C</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div> -->
+            <!-- <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Address" formControlName="address" />
+                    <mat-error>Address is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Address</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div> -->
+
+        </div>
+        <!-- <div class="row" style="margin-top:20px; margin-top: 20px;
+        display: flex;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: 30px;">
+            <button type="button" mat-raised-button color="primary" (click)="close()">
+                Cancel
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" mat-raised-button color="primary" (click)="save()">
+                Save
+            </button>
+        </div> -->
+
+    </form>
+</div>

@@ -1,0 +1,89 @@
+<mat-card>
+    <mat-tab-group (selectedTabChange)="tabChanged($event)">
+        <mat-tab label="General">
+            <mat-card>
+                <div class="row">
+                    <div class="col-md-6" [formGroup]="settingForm">
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Company Name" formControlName="companyName" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="R.U.C" formControlName="ruc" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Street" formControlName="street" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="State" formControlName="state" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Country" formControlName="country" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="itbms" formControlName="itbms" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="A-Difference" formControlName="aDifference" />
+                        </mat-form-field>
+                        <span style="font-size: x-large;">SMTP SETTINGS</span>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Server" formControlName="server" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="UserName" formControlName="username" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Password" formControlName="password" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Port" formControlName="port" />
+                        </mat-form-field>
+                        <!-- <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="TAX %" formControlName="TaxValue" />
+                        </mat-form-field> -->
+                        <!-- <mat-checkbox formControlName="TaxStatus" (change)="changeTax($event)">ON /OFF(Tax)</mat-checkbox> -->
+                        <mat-checkbox formControlName="hideOrUnhide">Hide/Unhide</mat-checkbox>
+                        <br />
+                        <button mat-raised-button type="button" color="primary" (click)="save()">SAVE</button>
+
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3">
+                        <span>Logo</span>
+                        <kt-courier-final></kt-courier-final>
+                    </div>
+                </div>
+            </mat-card>
+        </mat-tab>
+        <!-- <mat-tab label="Packages">
+            <kt-package-type></kt-package-type>
+        </mat-tab> -->
+        <!-- <mat-tab label="Areas & Pricing">
+            <kt-pricing></kt-pricing>
+        </mat-tab> -->
+        <!-- <mat-tab label="Customer Groups">
+            <kt-customer-groups></kt-customer-groups>
+        </mat-tab> -->
+        <mat-tab label="User management">
+            <kt-user-list></kt-user-list>
+        </mat-tab>
+        <mat-tab label="WGroups">
+            <kt-wgroups></kt-wgroups>
+        </mat-tab>
+        <mat-tab label="Wdelivery">
+            <kt-wdelivery></kt-wdelivery>
+        </mat-tab>
+        <mat-tab label="Po box" (click)="showState()">
+            <kt-psbox *ngIf="showStateValue == 6"></kt-psbox>
+        </mat-tab>
+        <mat-tab label="Google Map">
+            <google-map></google-map>
+        </mat-tab>
+        <mat-tab label="Dynamic Email(customer)" (click)="showState1()">
+            <kt-dynamic-email *ngIf="showStateValue == 8"></kt-dynamic-email>
+        </mat-tab>
+        <mat-tab label="Dynamic Table(package)" (click)="showState2()">
+            <kt-dynamic-table *ngIf="showStateValue == 9"></kt-dynamic-table>
+        </mat-tab>
+    </mat-tab-group>
+</mat-card>

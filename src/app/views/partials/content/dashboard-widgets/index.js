@@ -1,0 +1,14 @@
+export { Widget1SalesStatComponent } from './widget1-sales-stat/widget1-sales-stat.component';
+export { Widget9RecentActivitiesComponent } from './widget9-recent-activities/widget9-recent-activities.component';
+export { Widget12NewUsersComponent } from './widget12-new-users/widget12-new-users.component';
+export { Widget7WeeklySalesComponent } from "./widget7-weekly-sales/widget7-weekly-sales.component";
+export { Widget1TasksOverviewComponent } from './widget1-tasks-overview/widget1-tasks-overview.component';
+export { Widget2NewArrivalsComponent } from './widget2-new-arrivals/widget2-new-arrivals.component';
+export { Widget3NewArrivalsAuthorsComponent } from'./widget3-authors/widget3-authors.component';
+export { Widget4TodoComponent } from './widget4-todo/widget4-todo.component';
+export { Widget8TrendsComponent } from './widget8-trends/widget8-trends.component';
+export { Dropdown1Component } from "./dropdowns/dropdown1/dropdown1.component";
+export { Dropdown2Component } from "./dropdowns/dropdown2/dropdown2.component";
+export { Dropdown3Component } from "./dropdowns/dropdown3/dropdown3.component";
+export { Dropdown4Component } from "./dropdowns/dropdown4/dropdown4.component";
+export { Dropdown5Component } from "./dropdowns/dropdown5/dropdown5.component";

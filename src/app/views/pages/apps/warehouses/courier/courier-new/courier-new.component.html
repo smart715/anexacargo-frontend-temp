@@ -1,0 +1,176 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <span>New Courier</span>
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button mat-raised-button color="primary" type="button" (click)="save()" [disabled]='saveFlag'>
+                <span>Save</span>
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div class="container">
+            <div class="row" [formGroup]="courierForm">
+                <div class="col-md-2">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput placeholder="Courier" formControlName="courier" autocomplete="off" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field>
+                        <mat-select placeholder="Location" formControlName="location"
+                            (selectionChange)="changeLocation()">
+                            <!-- <mat-option value="0">China</mat-option> -->
+                            <mat-option value="1">USA</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2" *ngIf="courierType != '0'">
+                    <mat-form-field>
+                        <mat-select placeholder="Type" formControlName="type" (selectionChange)="changeType()">
+                            <mat-option value="0">Air</mat-option>
+                            <mat-option value="1">Maritime</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput placeholder="Cost" formControlName="cost" type="number" autocomplete="off" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row" *ngFor="let warehouses of getControls();let i = index" [formGroup]="warehouses">
+
+
+                <div class="col-md-2">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input type="text" placeholder="AnexaID" aria-label="Number" matInput formControlName="aexID"
+                            [matAutocomplete]="auto" (change)="calcWarehousePrice(warehouses)">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option (onSelectionChange)="calcWarehousePrice(warehouses)"
+                                (click)="calcWarehousePrice(warehouses)"
+                                *ngFor="let option of filteredOptions[i] | async"
+                                [value]="(option.idcustomers < 10 ? 250 : 25) + ''+ option.idcustomers">
+                                {{option.idcustomers
+                                <10?250:25}}{{option.idcustomers}}&nbsp;|&nbsp;{{option.firstName}}&nbsp;{{option.lastName}}
+                                    </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+
+
+
+
+                <!-- <div class="col-md-2">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput placeholder="AexID" formControlName="aexID" />
+                    </mat-form-field>
+                </div> -->
+
+
+
+                <div class="col-md-2">
+
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput placeholder="Warehouse" formControlName="warehouse" autocomplete="off" />
+                    </mat-form-field>
+                </div>
+                <ng-container *ngIf="courierType == '0'">
+
+                    <div class="col-md-2">
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="FT3" formControlName="m3"
+                                (change)=" calcWarehousePrice(warehouses)" type="number" autocomplete="off" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Taxes" formControlName="taxes" autocomplete="off"
+                                (change)=" calcWarehousePrice(warehouses)" />
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="courierType != '0'">
+                    <div class="col-md-2">
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput placeholder="Tracking" formControlName="tracking" autocomplete="off" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-1" *ngIf="courierType == '1'">
+                        <mat-form-field class="mat-form-field-fluid" style="width: 70px;">
+                            <input matInput placeholder="Weight" formControlName="weight" type="number"
+                                (change)=" calcWarehousePrice(warehouses)" autocomplete="off" />
+                        </mat-form-field>
+                    </div>
+                    <ng-container *ngIf="courierType == '1'">
+                        <div class="col-md-1" style="display: flex;">
+                            <mat-form-field class="mat-form-field-fluid" style="width: 70px;">
+                                <input matInput placeholder="W" formControlName="width" type="number"
+                                    (change)=" calcWarehousePrice(warehouses)" autocomplete="off" />
+                            </mat-form-field>
+                            <div style="    height: fit-content;
+                            margin-top: auto;
+                            margin-bottom: auto;">*</div>
+                        </div>
+                        <div class="col-md-1" style="display: flex;">
+                            <mat-form-field class="mat-form-field-fluid" style="width: 70px;">
+                                <input matInput placeholder="H" formControlName="height" type="number"
+                                    (change)=" calcWarehousePrice(warehouses)" autocomplete="off" />
+                            </mat-form-field>
+                            <div style="    height: fit-content;
+                            margin-top: auto;
+                            margin-bottom: auto;">*</div>
+                        </div>
+                        <div class="col-md-1" style="display: flex;">
+                            <mat-form-field class="mat-form-field-fluid" style="width: 70px;">
+                                <input matInput placeholder="L" formControlName="length" type="number"
+                                    (change)=" calcWarehousePrice(warehouses)" autocomplete="off" />
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="courierType == '2'">
+                        <div class="col-md-1" style="display: flex;">
+                            <mat-form-field class="mat-form-field-fluid" style="width: 70px;">
+                                <input matInput placeholder="Cubicfeet" formControlName="cubic"
+                                    (change)=" calcWarehousePrice(warehouses)" type="number" autocomplete="off" />
+                            </mat-form-field>
+                        </div>
+
+                        <!-- <div class="col-md-1" style="display: flex;margin-top: 12px;">
+                            <mat-label style="margin-right: 10px;">BL/WHC</mat-label>
+                            <mat-checkbox formControlName="bl" (change)=" calcWarehousePrice(warehouses)">
+                            </mat-checkbox>
+                        </div>
+                        <div class="col-md-1" style="display: flex; margin-top: 12px;">
+                            <mat-label style="margin-right: 10px">SED</mat-label>
+                            <mat-checkbox formControlName="sed" (change)=" calcWarehousePrice(warehouses)">
+                            </mat-checkbox>
+                        </div> -->
+                    </ng-container>
+
+                </ng-container>
+
+                <div class="col-md-1" style="display: flex;">
+                    <mat-form-field class="mat-form-field-fluid" style="width: 70px;">
+                        <input matInput placeholder="Price" formControlName="price" type="number" autocomplete="off"
+                            style="color: black;" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md-1" style="display: flex;">
+                    <button mat-button color="primary" type="button" style="margin-left: -20px;"
+                        *ngIf="getControls().length != 1" (click)="deleteWarehouse(i)">
+                        <mat-icon> delete</mat-icon>
+                    </button>
+                    <button mat-button color="primary" type="button" *ngIf="i+1 == getControls().length"
+                        (click)="addWarehouse(i)">
+                        <mat-icon> add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,157 @@
+<kt-portlet>
+    <!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+    <kt-portlet-header [class]="'card-head-lg'">
+        <!-- PORTLET LOADING | Binded to TABLE Datasource -->
+
+        <ng-container ktPortletTitle>
+            <span>{{customer.idcustomers<10 ? 250 : 25}}{{customer.idcustomers}}&nbsp;&nbsp;{{customer.firstName}}&nbsp;&nbsp;&nbsp;{{customer.lastName}}</span>
+        </ng-container>
+
+        <ng-container ktPortletTools>
+            <button *ngIf="disabledFlag" mat-button color="primary" type="button" (click)="editProfile()">
+                <mat-icon style="font-size: 30px !important; margin-top: -5px;">edit</mat-icon>
+            </button>
+            <!-- [ngStyle]="disabledFlag ? {'pointer-events':'none'} : {'pointer-events':'auto'}" -->
+            <!-- <div class="col-md-2">
+                <span>Status</span>
+                <br> -->
+            <div [ngClass]="statusClass" [matMenuTriggerFor]="menu" style="width: 80px; height: 40px; padding: 12px;">
+                {{status}}
+            </div>
+            <mat-menu #menu="matMenu">
+                <div mat-menu-item class="status3" (click)="updateStatus($event)">Active</div>
+                <div mat-menu-item class="status2" (click)="updateStatus($event)">InActive</div>
+            </mat-menu>
+            <!-- </div> -->
+
+
+            <!-- <button mat-raised-button matTooltip="Create new customer" color="primary" type="button">
+                <span (click)="back()">Back</span>
+            </button> -->
+        </ng-container>
+    </kt-portlet-header>
+
+    <kt-portlet-body>
+        <mat-card>
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon style="margin-top: 5px;">account_box</mat-icon>
+                        Profile
+                    </ng-template>
+                    <div class="container" style="margin-left: 30px;">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <span>Name</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.firstName}}" [(ngModel)]="firstName" [disabled]="disabledFlag" />
+                            </div>
+                            <div class="col-md-2">
+                                <span>LastName</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.lastName}}" [(ngModel)]="lastName" [disabled]="disabledFlag" />
+                            </div>
+                            <div class="col-md-2">
+                                <span>Email</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.email}}" [(ngModel)]="email" [disabled]="disabledFlag" />
+                            </div>
+                            <!-- <div class="col-md-2">
+                                <span>Phone</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.phone}}" [(ngModel)]="phone" [disabled]="disabledFlag" />
+                            </div> -->
+                            <div class="col-md-2">
+                                <span>Mobile</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.mobile}}" [(ngModel)]="mobile" [disabled]="disabledFlag" />
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 30px;">
+                            <!-- <div class="col-md-2">
+                                <span>Company</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.company}}" [(ngModel)]="company" [disabled]="disabledFlag" />
+                            </div> -->
+                            <div class="col-md-2">
+                                <span>Since Date</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.register}}" [(ngModel)]="register" [disabled]="disabledFlag" />
+                            </div>
+                            <!-- <div class="col-md-2">
+                                <span>Address</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.address}}" [(ngModel)]="address" [disabled]="disabledFlag" />
+                            </div> -->
+                            <!-- <div class="col-md-2">
+                                <span>R.U.C</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.ruc}}" [(ngModel)]="ruc" [disabled]="disabledFlag" />
+                            </div> -->
+                            <div class="col-md-2">
+                                <span>PersonalID</span>
+                                <br>
+                                <input style="color: black;" matInput value="{{customer.pID}}" [(ngModel)]="pID" [disabled]="disabledFlag" />
+                            </div>
+                            <div class="col-md-2">
+                                <span>Customer Group</span>
+                                <br>
+                                <mat-select [(ngModel)]="customerGroup" [disabled]="disabledFlag" style="margin-top: 2px;">
+                                    <mat-option *ngFor="let customerGroup of customerGroups" [value]="customerGroup.idcustomerGroup">{{customerGroup.name}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="col-md-2">
+                                <span>WGroup</span>
+                                <br>
+                                <mat-select [(ngModel)]="idwGroup" [disabled]="disabledFlag" style="margin-top: 2px;">
+                                    <mat-option *ngFor="let wGroup of wGroups" [value]="wGroup.idwGroup">{{wGroup.name}}</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <div class="row" style="width: fit-content;
+                        margin-left: auto;
+                        margin-right: auto;
+                        margin-top: 30px;">
+                            <!-- <button *ngIf="disabledFlag" mat-raised-button color="primary" type="button" (click)="editProfile()">
+                                <span>Edit Profile</span>
+                            </button> -->
+                            <button *ngIf="!disabledFlag" mat-raised-button color="primary" type="button" (click)="updateProfile()">
+                                <span>Update Profile</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </mat-tab>
+                <div class="separator separator-dashed my-6"></div>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon style="margin-top: 5px;">reorder</mat-icon>
+                        Orders
+                    </ng-template>
+                    <kt-orders-by-customer [customerID]="customerID"></kt-orders-by-customer>
+                    <!-- <kt-products-list></kt-products-list> -->
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon style="margin-top: 5px;">reorder</mat-icon>
+                        Warehouse
+                    </ng-template>
+                    <kt-warehouses [customerID]="customerID"></kt-warehouses>
+                    <!-- <kt-products-list></kt-products-list> -->
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card>
+
+        <mat-card style="margin-top: 30px;">
+            <mat-tab-group>
+                <mat-tab label="Comments" style="overflow: unset;">
+                    <kt-customer-comments [customerID]="customerID"></kt-customer-comments>
+                </mat-tab>
+                <mat-tab label="Records Log">
+                    <kt-customer-log [customerID]="customerID"  ></kt-customer-log>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card>
+
+    </kt-portlet-body>
+</kt-portlet>

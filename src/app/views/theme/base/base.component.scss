@@ -1,0 +1,15 @@
+kt-base {
+	opacity: 0;
+	height: 100%;
+
+	.grid-root {
+		height: 100%;
+	}
+}
+
+.page-loaded {
+	kt-base {
+		opacity: 1;
+		transition: opacity 1s ease-in-out;
+	}
+}

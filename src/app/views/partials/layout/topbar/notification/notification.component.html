@@ -1,0 +1,393 @@
+<!--begin::Notifications-->
+<div ngbDropdown placement="bottom-right" autoClose="outside" class="dropdown dropdown-fluid">
+	<!--begin::Toggle-->
+	<div ngbDropdownToggle class="topbar-item">
+		<ng-container *ngIf="useSVG">
+			<div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary">
+				<span class="svg-icon svg-icon-xl svg-icon-primary" [inlineSVG]="icon"></span>
+				<span class="pulse-ring"></span>
+			</div>
+		</ng-container>
+		<ng-container *ngIf="!useSVG">
+			<i [ngClass]="icon"></i>
+		</ng-container>
+	</div>
+	<!--end::Toggle-->
+
+	<!--begin::Dropdown-->
+	<div ngbDropdownMenu class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg show">
+		<form>
+			<!--begin::Header-->
+			<div class="d-flex flex-column pt-10 bp-10 bgi-size-cover bgi-no-repeat rounded-top"
+				[ngStyle]="{'background-image': backGroundStyle() }">
+				<!--begin::Title-->
+				<h4 class="d-flex flex-center rounded-top">
+					<span class="text-white">User Notifications</span>
+					<span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">23 new</span>
+				</h4>
+				<!--end::Title-->
+				<!--begin::Tabs-->
+				<ul ktTabClickEvent
+					class="nav nav-bold nav-tabs nav-tabs-line nav-tabs-line-3x nav-tabs-line-transparent-white nav-tabs-line-active-border-success mt-2 px-6"
+					role="tablist">
+					<li class="nav-item">
+						<a (click)="tab.select('tab-id-1')" class="nav-link active show" data-toggle="tab"
+							href="javascript:;" role="tab" aria-selected="true">Alerts</a>
+					</li>
+					<li class="nav-item">
+						<a (click)="tab.select('tab-id-2')" class="nav-link" data-toggle="tab" href="javascript:;"
+							role="tab" aria-selected="false">Events</a>
+					</li>
+					<li class="nav-item">
+						<a (click)="tab.select('tab-id-3')" class="nav-link" data-toggle="tab" href="javascript:;"
+							role="tab" aria-selected="false">Logs</a>
+					</li>
+				</ul>
+				<!--end::Tabs-->
+			</div>
+			<!--end::Header-->
+
+			<ngb-tabset #tab="ngbTabset" class="tab-content">
+				<ngb-tab id="tab-id-1" class="tab-pane">
+					<ng-template ngbTabContent>
+						<div class="p-8">
+							<div class="pr-7 mr-n7 scroll" [perfectScrollbar]="{wheelPropagation: false}"
+								[ngStyle]="{'max-height': '300px', 'position': 'relative'}">
+								<!--begin::Nav-->
+								<div class="d-flex align-items-center mb-6">
+									<div class="symbol symbol-40 symbol-light-primary mr-5">
+										<span class="symbol-label">
+											<span [inlineSVG]="'./assets/media/svg/icons/Home/Library.svg'"
+												class="svg-icon svg-icon-lg svg-icon-primary"></span>
+										</span>
+									</div>
+									<div class="d-flex flex-column font-weight-bold">
+										<a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">
+											Briviba SaaS
+										</a>
+										<span class="text-muted">
+											PHP, SQLite, Artisan CLIмм
+										</span>
+									</div>
+								</div>
+								<div class="d-flex align-items-center mb-6">
+									<div class="symbol symbol-40 symbol-light-warning mr-5">
+										<span class="symbol-label">
+											<span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'"
+												class="svg-icon svg-icon-lg svg-icon-warning"></span>
+										</span>
+									</div>
+									<div class="d-flex flex-column font-weight-bold">
+										<a href="#" class="text-dark-75 text-hover-primary mb-1 font-size-lg">
+											Briviba SaaS
+										</a>
+										<span class="text-muted">
+											PHP, SQLite, Artisan CLIмм
+										</span>
+									</div>
+								</div>
+								<div class="d-flex align-items-center mb-6">
+									<div class="symbol symbol-40 symbol-light-success mr-5">
+										<span class="symbol-label">
+											<span [inlineSVG]="'./assets/media/svg/icons/Communication/Group-chat.svg'"
+												class="svg-icon svg-icon-lg svg-icon-success"></span>
+										</span>
+									</div>
+									<div class="d-flex flex-column font-weight-bold">
+										<a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">
+											Briviba SaaS
+										</a>
+										<span class="text-muted">
+											PHP, SQLite, Artisan CLIмм
+										</span>
+									</div>
+								</div>
+								<div class="d-flex align-items-center mb-6">
+									<div class="symbol symbol-40 symbol-light-danger mr-5">
+										<span class="symbol-label">
+											<span [inlineSVG]="'./assets/media/svg/icons/General/Attachment2.svg'"
+												class="svg-icon svg-icon-lg svg-icon-danger"></span>
+										</span>
+									</div>
+									<div class="d-flex flex-column font-weight-bold">
+										<a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">
+											Briviba SaaS
+										</a>
+										<span class="text-muted">
+											PHP, SQLite, Artisan CLIмм
+										</span>
+									</div>
+								</div>
+								<div class="d-flex align-items-center mb-2">
+									<div class="symbol symbol-40 symbol-light-info mr-5">
+										<span class="symbol-label">
+											<span [inlineSVG]="'./assets/media/svg/icons/General/Attachment2.svg'"
+												class="svg-icon svg-icon-lg svg-icon-info"></span>
+										</span>
+									</div>
+									<div class="d-flex flex-column font-weight-bold">
+										<a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">
+											Briviba SaaS
+										</a>
+										<span class="text-muted">
+											PHP, SQLite, Artisan CLIмм
+										</span>
+									</div>
+								</div>
+								<div class="d-flex align-items-center mb-2">
+									<div class="symbol symbol-40 symbol-light-info mr-5">
+										<span class="symbol-label">
+											<span
+												[inlineSVG]="'./assets/media/svg/icons/Communication/Mail-notification.svg'"
+												class="svg-icon svg-icon-lg svg-icon-info"></span>
+										</span>
+									</div>
+									<div class="d-flex flex-column font-weight-bold">
+										<a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">
+											Briviba SaaS
+										</a>
+										<span class="text-muted">
+											PHP, SQLite, Artisan CLIмм
+										</span>
+									</div>
+								</div>
+								<div class="d-flex align-items-center mb-2">
+									<div class="symbol symbol-40 symbol-light-info mr-5">
+										<span class="symbol-label">
+											<span [inlineSVG]="'./assets/media/svg/icons/Design/Bucket.svg'"
+												class="svg-icon svg-icon-lg svg-icon-info"></span>
+										</span>
+									</div>
+									<div class="d-flex flex-column font-weight-bold">
+										<a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">
+											Briviba SaaS
+										</a>
+										<span class="text-muted">
+											PHP, SQLite, Artisan CLIмм
+										</span>
+									</div>
+								</div>
+								<!--end::Nav-->
+							</div>
+						</div>
+					</ng-template>
+				</ngb-tab>
+				<ngb-tab id="tab-id-2">
+					<ng-template ngbTabContent>
+						<div [perfectScrollbar]="{wheelPropagation: false}" class="navi navi-hover scroll mb-3 mt-3 ps"
+							[ngStyle]="{'height': '300px', 'position': 'relative'}">
+							<!--begin::Nav-->
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-line-chart text-success"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											New report has been received
+										</div>
+										<div class="text-muted">23 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-paper-plane text-danger"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											Finance report has been generated
+										</div>
+										<div class="text-muted">25 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-user flaticon2-line- text-success"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											New order has been received
+										</div>
+										<div class="text-muted">2 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-pin text-primary"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											New customer is registered
+										</div>
+										<div class="text-muted">3 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-sms text-danger"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											Application has been approved
+										</div>
+										<div class="text-muted">3 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-pie-chart-3 text-warning"></i>
+									</div>
+									<div class="navinavinavi-text">
+										<div class="font-weight-bold">
+											New file has been uploaded
+										</div>
+										<div class="text-muted">5 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon-pie-chart-1 text-info"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											New user feedback received
+										</div>
+										<div class="text-muted">8 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-settings text-success"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											System reboot has been successfully completed
+										</div>
+										<div class="text-muted">12 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon-safe-shield-protection text-primary"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											New order has been placed
+										</div>
+										<div class="text-muted">15 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-notification text-primary"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											Company meeting canceled
+										</div>
+										<div class="text-muted">19 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-fax text-success"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											New report has been received
+										</div>
+										<div class="text-muted">23 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon-download-1 text-danger"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											Finance report has been generated
+										</div>
+										<div class="text-muted">25 hrs ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon-security text-warning"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											New customer comment recieved
+										</div>
+										<div class="text-muted">2 days ago</div>
+									</div>
+								</div>
+							</a>
+
+							<a href="#" class="navi-item">
+								<div class="navi-link">
+									<div class="navi-icon mr-2">
+										<i class="flaticon2-analytics-1 text-success"></i>
+									</div>
+									<div class="navi-text">
+										<div class="font-weight-bold">
+											New customer is registered
+										</div>
+										<div class="text-muted">3 days ago</div>
+									</div>
+								</div>
+							</a>
+							<!--end::Nav-->
+						</div>
+					</ng-template>
+				</ngb-tab>
+				<ngb-tab id="tab-id-3">
+					<ng-template ngbTabContent>
+						<div class="d-flex flex-center text-center text-muted" style="min-height: 200px;">
+							All caught up!
+							<br />No new notifications.
+						</div>
+					</ng-template>
+				</ngb-tab>
+			</ngb-tabset>
+		</form>
+	</div>
+	<!--end::Dropdown-->
+</div>
+<!--end::Notifications-->

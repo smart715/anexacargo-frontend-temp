@@ -1,0 +1,106 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <div style="display: flex;" (click)="back()">
+                <mat-icon style="margin-top: 2px;">keyboard_arrow_left</mat-icon>
+                <div>Back</div>
+            </div>
+        </ng-container>
+        <!-- <ng-container ktPortletTools>
+            <div>AX0008</div>
+        </ng-container> -->
+    </kt-portlet-header>
+    <kt-portlet-body style="padding-left: 15px; padding-right: 15px;">
+        <div class="row">
+            <div class="col">
+                <div>Name</div>
+                <div><strong>{{order.customer}}</strong></div>
+            </div>
+            <div class="col">
+                <div style="text-align: right;">Pricing</div>
+                <div style="text-align: right;"><strong>{{order.cost}}</strong></div>
+            </div>
+        </div>
+        <!-- <div class="row" style="margin-top: 20px;">
+            <div class="col">
+                <div>New Pricing</div>
+                <div><strong>$6.18</strong></div>
+            </div>
+            <div class="col">
+                <div style="text-align: right;">Difference</div>
+                <div style="text-align: right;"><strong>$1.00</strong></div>
+            </div>
+        </div> -->
+        <ng-container *ngFor="let package of packages; index as i">
+            <div class="row" style="margin-top: 20px; margin-bottom: 10px; font-size: 15px;">
+                <div class="col">
+                    <div>Package {{package.idpackages}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput placeholder="Weight" [(ngModel)]="package.weight" (change)="calcPrice()" />
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput placeholder="Length" [(ngModel)]="package.length" (change)="calcPrice()" />
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput placeholder="Width" [(ngModel)]="package.width" (change)="calcPrice()" />
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-form-field-fluid">
+                        <input matInput placeholder="Height" [(ngModel)]="package.height" (change)="calcPrice()" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile" style="padding-left: 0px; width: 200px;">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="Package Type" [(ngModel)]="package.type" (selectionChange)="calcPrice()">
+                        <!-- <mat-option value="0">Box</mat-option>
+                        <mat-option value="1">Container</mat-option> -->
+                        <mat-option *ngFor="let type of packageTypes" [value]="type.idpackageType">{{type.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <div class="row" style="margin-top: 20px; margin-bottom: 10px; font-size: 15px;">
+            <div class="col">
+                <div>Delivery Address</div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-left: 20px;">
+            <div class="col-lg-4 kt-margin-bottom-20-mobile" style="padding-left: 0px; width: 200px;">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="State" [(ngModel)]="deliveryState">
+                        <mat-option *ngFor="let state of states" [value]="state.idstates" (click)="onStateChange(state)">{{state.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-4 kt-margin-bottom-20-mobile" style="padding-left: 0px; width: 200px;">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="State" [(ngModel)]="deliveryArea" (selectionChange)="calcPrice()">
+                        <ng-container *ngFor="let area of areas">
+                            <mat-option [value]="area.idareas">{{area.name}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row" style="margin-left: auto;
+        margin-top: 20px;
+		margin-right: auto;
+		width: fit-content;">
+            <button mat-raised-button color="primary" type="button" (click)="save()">
+                <span>Save Order</span>
+            </button>
+        </div>
+    </kt-portlet-body>
+</kt-portlet>

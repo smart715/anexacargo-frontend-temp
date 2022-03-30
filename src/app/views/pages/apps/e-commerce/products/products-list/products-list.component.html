@@ -1,0 +1,228 @@
+<kt-portlet>
+	<!-- <kt-portlet-header [sticky]="true" [title]="'Products list'" [class]="'card-head-lg'"
+		[viewLoading$]="dataSource.loading$">
+		<ng-container ktPortletTools>
+			<button (click)="createProduct()" mat-raised-button color="primary" matTooltip="Create new product">New
+				product</button>
+		</ng-container>
+	</kt-portlet-header> -->
+	<!-- end::Header -->
+
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="form mb-3">
+			<!-- start::FILTERS -->
+			<div class="form-filtration">
+				<div class="row align-items-center">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" #searchInput placeholder="Search"
+								class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+					<div class="col-md-2 kt-margin-bottom-10-mobile" style="margin-left: auto;">
+						<mat-form-field>
+							<mat-select [(value)]="filterStatus" (selectionChange)="loadProductsList()"
+								class="mat-form-field mat-form-field-fluid">
+								<mat-option value="">All</mat-option>
+								<mat-option value="0">Selling</mat-option>
+								<mat-option value="1">Sold</mat-option>
+							</mat-select>
+							<mat-hint align="start">
+								<strong>Filter by Status</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+					<!-- <div class="col-md-2 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<mat-select [(value)]="filterCondition" (selectionChange)="loadProductsList()"
+								class="mat-form-field mat-form-field-fluid">
+								<mat-option value="">All</mat-option>
+								<mat-option value="0">New</mat-option>
+								<mat-option value="1">Used</mat-option>
+							</mat-select>
+							<mat-hint align="start">
+								<strong>Filter by Contidion</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div> -->
+
+				</div>
+			</div>
+			<!-- end::FILTERS -->
+
+			<!-- start::GROUP ACTIONS -->
+			<!-- Group actions list: 'Delete selected' | 'Fetch selected' | 'Update status for selected' -->
+			<!-- Group actions are shared for all LISTS | See '../../_shared' folder -->
+			<div class="row align-items-center collapse form-group-actions kt-margin-top-20 kt-margin-bottom-20"
+				[ngClass]="{'show' : selection.selected.length > 0}">
+				<div class="col-xl-12">
+					<div class="form-group form-group-inline">
+						<div class="form-label form-label-no-wrap">
+							<label class="font-bold font-danger-">Selected records count:
+								{{ selection.selected.length }}</label>
+						</div>
+						<div>
+							<button mat-raised-button color="warn" (click)="deleteProducts()"
+								matTooltip="Delete selected products" class="mat-button-mt-4">
+								<mat-icon>delete</mat-icon>
+								Delete All
+							</button>&nbsp;
+							<!-- Call 'delete-entity-dialog' from _shared folder -->
+							<button mat-raised-button (click)="fetchProducts()" matTooltip="Fetch selected products"
+								class="mat-button-mt-4">
+								<mat-icon>clear_all</mat-icon>
+								Fetch Selected Records
+							</button>&nbsp;
+							<!-- Call 'fetch-entity-dialog' from _shared folder -->
+							<button mat-raised-button (click)="updateStatusForProducts()"
+								matTooltip="Update status for selected products" class="mat-button-mt-4">
+								<mat-icon>update</mat-icon>
+								Update status
+							</button><!-- Call 'update-stated-dialog' from _shared folder -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end::GROUP ACTIONS -->
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table-wrapper">
+			<!-- Checkbox Column -->
+			<!-- Table with selection -->
+			<!-- https://run.stackblitz.com/api/angular/v1?file=app%2Ftable-selection-example.ts -->
+			<mat-table class="lmat-elevation-z8" #table [dataSource]="dataSource" matSort #sort1="matSort"
+				matSortActive="id" matSortDirection="asc" matSortDisableClear>
+				<!-- Checkbox Column -->
+				<ng-container matColumnDef="select">
+					<mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
+						<mat-checkbox (change)="$event ? masterToggle() : null"
+							[checked]="selection.hasValue() && isAllSelected()"
+							[indeterminate]="selection.hasValue() && !isAllSelected()" [color]="'primary'">
+						</mat-checkbox>
+					</mat-header-cell>
+					<mat-cell *matCellDef="let row" class="mat-column-checkbox">
+						<mat-checkbox (click)="$event.stopPropagation()"
+							(change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+							[color]="'primary'">
+						</mat-checkbox>
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="id">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>id</mat-header-cell>
+					<mat-cell *matCellDef="let product">{{product.id}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="tracking">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Tracking</mat-header-cell>
+					<mat-cell *matCellDef="let product">{{product.tracking}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="createdDate">
+					<mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column-vinCode">Date
+					</mat-header-cell>
+					<mat-cell *matCellDef="let product" class="mat-column-vinCode">{{product.createdDate}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="weight">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Weight</mat-header-cell>
+					<mat-cell *matCellDef="let product">{{product.weight}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="volWeight">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Vol Weight</mat-header-cell>
+					<mat-cell *matCellDef="let product">{{product.volWeight}}</mat-cell>
+				</ng-container>
+
+				<!-- <ng-container matColumnDef="modelYear">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Model Year</mat-header-cell>
+					<mat-cell *matCellDef="let product">{{product.modelYear}}</mat-cell>
+				</ng-container> -->
+
+				<!-- <ng-container matColumnDef="color">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
+					<mat-cell *matCellDef="let product" [ngStyle]="{ 'color' : product.color }">{{product.color}}
+					</mat-cell>
+				</ng-container> -->
+				
+				<ng-container matColumnDef="price">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Cost</mat-header-cell>
+					<mat-cell *matCellDef="let product">{{product.price}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="assignedTo">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Assigned to</mat-header-cell>
+					<mat-cell *matCellDef="let product">{{product.assignedTo}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="status">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+					<mat-cell *matCellDef="let product">
+						<span
+							class="label label-lg label-light-{{ getItemCssClassByStatus(product.status) }} label-inline">{{ getItemStatusString(product.status) }}</span>
+					</mat-cell>
+				</ng-container>
+
+				<!-- <ng-container matColumnDef="condition">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Condition</mat-header-cell>
+					<mat-cell *matCellDef="let product">
+						<span
+							class="label label-dot label-{{ getItemCssClassByCondition(product.condition) }} mr-2"></span>&nbsp;
+						<span
+							class="font-bold font-{{ getItemCssClassByCondition(product.condition) }}">{{ getItemConditionString(product.condition) }}</span>
+					</mat-cell>
+				</ng-container> -->
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>
+						Actions
+					</mat-header-cell>
+					<mat-cell *matCellDef="let product">
+						<button type="button" (click)="editProduct(product.id)" mat-icon-button color="primary"
+							matTooltip="Edit product">
+							<mat-icon>create</mat-icon>
+						</button>&nbsp;
+						<button mat-icon-button color="warn" type="button" (click)="deleteProduct(product)"
+							matTooltip="Delete product">
+							<mat-icon>delete</mat-icon>
+						</button>&nbsp;
+						<button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More actions">
+							<mat-icon>more_vert</mat-icon>
+						</button>
+						<mat-menu #menu="matMenu">
+							<button mat-menu-item type="button">
+								<mat-icon>subject</mat-icon>
+								<span>Remarks</span>
+							</button>
+							<button mat-menu-item type="button">
+								<mat-icon>assignment</mat-icon>
+								<span>Specifications</span>
+							</button>
+						</mat-menu>
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<div class="mat-table-message" *ngIf="!dataSource.hasItems">No records found</div>
+			<div class="mat-table-message" *ngIf="dataSource.isPreloadTextViewed$ | async">Please wait....</div>
+		</div>
+
+		<!-- start: BOTTOM -->
+		<div class="mat-table-bottom">
+			<mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner>
+			<mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async"
+				[showFirstLastButtons]="true"></mat-paginator>
+		</div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

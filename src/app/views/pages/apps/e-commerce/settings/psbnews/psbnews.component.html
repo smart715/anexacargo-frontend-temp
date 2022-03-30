@@ -1,0 +1,15 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button mat-raised-button color="primary" type="button" style="margin-right: 20px;" (click)="savebox()">
+                <mat-icon style="margin-top: 5px;"> save</mat-icon>
+                <span>Save content</span>
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div id="editorpsbox"></div>
+    </kt-portlet-body>
+</kt-portlet>

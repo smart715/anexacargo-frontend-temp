@@ -1,0 +1,237 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <span>Warehouse</span>
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button (click)="edit()" mat-button color="primary" type="button" style="margin-right: 20px;" *ngIf="!editFlag">
+                <mat-icon> edit</mat-icon>
+                Edit
+            </button>
+            <button (click)="save()" mat-raised-button color="primary" type="button" style="margin-right: 20px;" *ngIf="editFlag">
+                Save
+            </button>
+            <button mat-button [matMenuTriggerFor]="menu">
+                <div [ngClass]='style'>
+                    {{title}}
+                </div>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="menuChange($event)" class="status0"> Pending</button>
+                <button mat-menu-item (click)="menuChange($event)" class="status1"> Ready</button>
+                <button mat-menu-item (click)="menuChange($event)" class="status2"> Delivery</button>
+                <button mat-menu-item (click)="menuChange($event)" class="status3"> Completed</button>
+                <button mat-menu-item (click)="menuChange($event)" class="status4"> Cancelled</button>
+            </mat-menu>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+
+        <div class="row" [formGroup]="warehouseFrom">
+            <div class="col-md-3" *ngIf="warehouse.type != 'China'">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Tracking" formControlName="tracking" style="color: black;" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Warehouse" formControlName="warehouse" style="color: black;" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Courier" formControlName="courier" style="color: black;" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <!-- <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Type" formControlName="type" style="color: black;" />
+                </mat-form-field> -->
+                <!-- <span class="mat-form-field" style="color: rgba(0, 0, 0, 0.54);">Type</span> -->
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="Type" formControlName="type">
+                        <mat-option value="0">
+                            Air
+                        </mat-option>
+                        <mat-option value="1">
+                            Maritime
+                        </mat-option>
+                        <mat-option value="2">
+                            China
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <div class="col-md-3" *ngIf="editFlag === '1'">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Customer ID" formControlName="customerID" style="color: black;" />
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3" *ngIf="editFlag === '1'">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Customer Name" formControlName="customer" style="color: red;" />
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+
+                <mat-form-field class="mat-form-field-fluid" >
+                    <input type="text" placeholder="Customer" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" style="color: black;">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async"  (onSelectionChange)="changeCustomer(option)" (click)="changeCustomer(option)" [value]=" option.idcustomers+' '+option.firstName+' '+option.lastName">{{option.idcustomers <10?250 :25}}{{option.idcustomers}}&nbsp;&nbsp;&nbsp;{{option.firstName}}&nbsp;&nbsp;{{option.lastName}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Registration" formControlName="registration" style="color: black;" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3" (click)="modalFunc()">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput  placeholder="Price" formControlName="price" disabled style="color: black;" />
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3" *ngIf="warehouse.type != 'China'">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Weight" formControlName="weight" style="color: black;" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3" *ngIf="warehouse.type == 'Air'">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Volumetric Weight" formControlName="volWeight" style="color: black;" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3" *ngIf="warehouse.type == 'China'">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="FT3" formControlName="m3" style="color: black;" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3" *ngIf="warehouse.type == 'China'">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Taxes" formControlName="taxes" style="color: black;" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3" *ngIf="warehouse.type == 'Maritime'">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Cubit Feet" formControlName="cubit" style="color: black;" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-3" *ngIf="warehouse.type == 'Maritime'" style="margin-top: 12px;">
+                <mat-label>
+                    BL/WHC: {{warehouse.bl == '1' ? 'Added' : 'Not Added'}}
+                </mat-label>
+                <mat-label style="margin-left: 20px;">
+                    SED: {{warehouse.sed == '1' ? 'Added' : 'Not Added'}}
+                </mat-label>
+            </div>
+
+            <div class="col-md-3" *ngIf="warehouse.type == 'Air'" style="margin-top: 12px;color: black; display: flex;">
+                
+                <div class="col-md-5">
+                    Dimentions:
+                </div>
+                <div class="col-md-2" style=" margin-left:-10px">
+                        <input matInput placeholder="Width" formControlName="wareWidth" [ngModel]="warehouse.width" style="color: black;" />
+                </div>
+                <div class="col-md-2" style="display: flex; margin-left:-25px">
+                    <mat-label>
+                    *
+                    </mat-label>
+                    <mat-label>
+                    <input matInput placeholder="Heigh" formControlName="wareHeight" [ngModel]="warehouse.height" style="color: black; margin-left:10px" />
+                    </mat-label>
+                </div>
+                <div class="col-md-2" style="display: flex; margin-left:-10px">
+                    <mat-label>
+                    *
+                    </mat-label>
+                    <mat-label>
+                    <input matInput placeholder="Length" formControlName="wareLength" [ngModel]="warehouse.length" style="color: black;margin-left:10px" />
+                    </mat-label>
+                </div>
+            </div>
+        </div>
+
+        <div class="separator separator-dashed my-6"></div>
+        <div>Record Logs</div>
+        <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+                <mat-cell *matCellDef="let detail">
+                    {{detail.date}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+                <mat-cell *matCellDef="let detail">
+                    {{detail.description}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="user">
+                <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
+                <mat-cell *matCellDef="let detail">
+                    {{detail.admin}}
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+  <mat-card class="mat-dialog-container" tabindex="-1" id="mat-dialog-0" style="position: absolute; width: 50%; top: 200px; left: 30%; max-height:270px;"  [formGroup]="modalFrom" *ngIf="modal == 'true'">
+    <mat-card-header style="padding: 10px;"> 
+        <div style="left: 70%; position: relative">
+         <button (click)="save_modal()" mat-raised-button color="primary" type="button" style="right: 20px;">
+                    Save
+        </button>
+        <button (click)="cancel_modal()" mat-raised-button color="white" type="button" style="right: 20px;margin-left: 10px;">
+            Cancel
+        </button>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+             <table class="table table-striped table-bordered my-table">
+                    <tr style="font-size: 11px;">
+                        <th class="center">#</th>
+                        <th class="hidden-xs">Descripción</th>
+                        <th class="center">Peso/vol</th>
+                        <th class="center">Tarifa Peso/vol</th>
+                        <th class="center">Total</th>
+                    </tr>
+                    <tbody style="font-size: 10.5px;">
+                        <tr>
+                            <td class="center">1</td>
+                            <td class="hidden-xs">
+                                Servicio de carga
+                                {{tracking}}
+                            </td>
+                            <td class="center">{{weight}}</td>
+                            <td class="center"><input [ngModel]="price_rate1" formControlName="firstPriceInput"  (change)="cal_firstPrice()" /></td>
+                            <td class="center">{{firstPrice}}</td>
+                        </tr>
+                        <tr>
+                            <td class="center">2</td>
+                            <td class="hidden-xs">
+                                trámites de aduana
+                            </td>
+                            <td class="center">{{weight}}</td>
+                            <td class="center"><input [ngModel]="price_rate2" formControlName="secondPriceInput" (change)="cal_secondPrice()" /></td>
+                            <td>{{secondPrice}}</td>
+                        </tr>
+                        <tr *ngIf="thirdPrice > 0">
+                            <td class="center">3</td>
+                            <td class="hidden-xs">ITBMS</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{thirdPrice}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+    </mat-card-content>
+</mat-card>
+    </kt-portlet-body>
+</kt-portlet>

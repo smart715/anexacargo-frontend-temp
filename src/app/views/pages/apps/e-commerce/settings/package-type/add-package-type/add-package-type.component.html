@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-header>
+        <div style="height: fit-content; margin-top: auto;">Add Package Type</div>
+        <button style="margin-left: auto;" type="button" mat-raised-button color="primary" (click)="addPackageType()">
+            {{buttonName}}
+        </button>
+    </mat-card-header>
+    <div class="separator separator-dashed my-6"></div>
+    <mat-card-content>
+        <form class="card-body" [formGroup]="packageTypeForm">
+            <mat-form-field class="mat-form-field-fluid">
+                <input matInput placeholder="Enter Package Type" formControlName="packageType"/>
+                <mat-error>Package Type is
+                    <strong>required</strong>
+                </mat-error>
+                <mat-hint align="start">Please enter
+                    <strong>Package Type</strong>
+                </mat-hint>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+</mat-card>

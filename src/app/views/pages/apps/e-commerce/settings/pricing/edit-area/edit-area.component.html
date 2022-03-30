@@ -1,0 +1,107 @@
+<mat-card>
+    <mat-card-header>
+        <div style="height: fit-content; margin-top: auto;">{{data.dialog == "addArea" ? 'Add Area' : 'Edit Area'}}</div>
+        <button *ngIf="data.dialog == 'addArea'" style="margin-left: auto;" type="button" mat-raised-button color="primary" (click)="addArea()">
+            Add
+        </button>
+        <button *ngIf="data.dialog == 'editArea'" style="margin-left: auto;" type="button" mat-raised-button color="primary" (click)="editArea()">
+            Save
+        </button>
+    </mat-card-header>
+    <div class="separator separator-dashed my-6"></div>
+    <mat-card-content>
+        <form class="card-body">
+            <div class="row" [formGroup]="areaForm">
+                <mat-form-field *ngIf="data.dialog == 'addArea'" class="mat-form-field-fluid" style="margin-right: 50px;">
+                    <mat-select placeholder="State" formControlName="state">
+                        <mat-option *ngFor="let state of states" [value]="state.idstates">{{state.name}}</mat-option>
+                    </mat-select>
+                    <mat-error>State is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="customerGroup" class="mat-form-field-fluid">
+                    <input matInput style="color: black;" placeholder="Customer Group" [value]="customerGroup" disabled/>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="data.dialog == 'editArea'" class="mat-form-field-fluid" style="margin-right: 50px;">
+                    <input style="color: black;" matInput placeholder="State" [value]="editState" disabled/>
+
+                    <!-- <mat-hint align="start">Please enter
+                        <strong>Area Name</strong>
+                    </mat-hint> -->
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fluid" style="margin-right: 50px;">
+                    <input matInput placeholder="Area Name" formControlName="area" />
+                    <mat-error>Area Name is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Area Name</strong>
+                    </mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="Status" formControlName="areaStatus">
+                        <mat-option value="0">
+                            <div class="status3">Active</div>
+                        </mat-option>
+                        <mat-option value="1">
+                            <div class="status1">InActive</div>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Status is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div style="margin-top: 30px" *ngFor="let price of getControls();let i = index" [formGroup]="price">
+                <div>{{packageTypes[i].name}}</div>
+                <div class="row">
+                    <mat-form-field class="mat-form-field-fluid" style="margin-right: 30px;">
+                        <input matInput placeholder="Base Price" type="number" min="0" formControlName="basePrice" />
+                        <mat-error>Base Price is
+                            <strong>required</strong>
+                        </mat-error>
+                        <mat-hint align="start">Please enter
+                            <strong>Base Price</strong>
+                        </mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-fluid" style="margin-right: 30px;">
+                        <input matInput placeholder="Extra RV" type="number" min="0" formControlName="extraRV" />
+                        <mat-error>Extra RV is
+                            <strong>required</strong>
+                        </mat-error>
+                        <mat-hint align="start">Please enter
+                            <strong>Extra RV</strong>
+                        </mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-fluid" style="margin-right: 30px;">
+                        <input matInput placeholder="Extra RW" type="number" min="0" formControlName="extraRW" />
+                        <mat-error>Extra RW is
+                            <strong>required</strong>
+                        </mat-error>
+                        <mat-hint align="start">Please enter
+                            <strong>Extra RW</strong>
+                        </mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-fluid" style="">
+                        <input matInput placeholder="Pickup" type="number" min="0" formControlName="pickup" />
+                        <mat-error>Pickup is
+                            <strong>required</strong>
+                        </mat-error>
+                        <mat-hint align="start">Please enter
+                            <strong>Pickup</strong>
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

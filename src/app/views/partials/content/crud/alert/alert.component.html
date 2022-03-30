@@ -1,0 +1,16 @@
+<div class="mat-alert  mat-alert-{{type}}" role="alert">
+	<div class="mat-alert-icon">
+		<i class="la la-warning"></i>
+	</div>
+	<div class="mat-alert-text">
+		<ng-content></ng-content>
+	</div>
+	<div class="mat-alert-close" *ngIf="showCloseButton">
+		<button type="button" 
+			mat-icon-button 
+			color="warn" 
+			(click)="closeAlert()">
+			<mat-icon class="material-icons">clear</mat-icon>
+		</button>
+	</div>
+</div>

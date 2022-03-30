@@ -1,0 +1,95 @@
+@media print {
+    // @page {
+    //     margin: 0;
+    //     size: 3in 4in !important;
+    //     /* auto is the initial value */
+    //     margin: 0mm;
+    //     /* this affects the margin in the printer settings */
+    // }
+    // body {
+    //     margin: 0cm;
+    //     width: 3in;
+    //     height: 4in;
+    // }
+    // body * {
+    //     visibility: hidden;
+    //     width: 3in;
+    //     height: 4in;
+    // }
+    // #print,
+    // #print * {
+    //     visibility: visible;
+    // }
+    #print {
+        position: absolute;
+        left: 0;
+        top: 4500px;
+        left: 230px;
+        transform: scale(2.5);
+    }
+    .print-btn{
+        display: none !important;
+    }
+    // .logo-image{
+    //     max-height: 30px;
+
+    // }
+}
+
+.barcode>svg {
+    width: 100% !important;
+}
+// #print{
+//     visibility: hidden;
+// }
+.company_customers{
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    box-sizing: border-box;
+    min-height: 1px;
+    float: left !important;
+    width: 91.66666667% !important;
+    display: inline;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    background-color: #5bc0de;
+    padding: .3em .6em .4em;
+    font-size: 13px;
+    line-height: 1.1;
+    height: 24px !important;
+    position: relative;
+    z-index: 1;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+.label-success {
+    background-color: #5cb85c !important;
+}
+.label-info {
+    background-color: #5bc0de !important;
+}
+
+.my-overlay {
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 10000 !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: fixed !important;
+  background-color: rgba(255, 255, 255, 0.404) !important;
+  cursor: pointer !important;
+  visibility: visible !important;
+  transition: visibility 0s, opacity 0.4s linear !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: wait !important;
+}
+.my-overlay i.fa.fa-spinner.fa-spin, .spinner-big {
+  font-size: 100px !important;
+}

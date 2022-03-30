@@ -1,0 +1,137 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            {{warehouseOrder.idwarehouseOrder}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{{warehouseOrder.customer}}
+        </ng-container>
+        <ng-container ktPortletTools>
+
+            <button mat-button color="primary" type="button" [matMenuTriggerFor]="menu">
+                <span *ngIf="warehouseOrder?.status == 0" class="status1">Pendding</span>
+                <span *ngIf="warehouseOrder?.status == 1" class="status3">In progress</span>
+                <span *ngIf="warehouseOrder?.status == 2" class="status0">Completed</span>
+                <span *ngIf="warehouseOrder?.status == 3" class="status2">Cancelled</span>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="menuChange($event)" class="status1">Pendding</button>
+                <button mat-menu-item (click)="menuChange($event)" class="status3">In progress</button>
+                <button mat-menu-item (click)="menuChange($event)" class="status0">Completed</button>
+                <button mat-menu-item (click)="menuChange($event)" class="status2">Cancelled</button>
+            </mat-menu>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <mat-card>
+            <mat-card-header>
+                Directions
+            </mat-card-header>
+            <div class="separator separator-dashed my-6"></div>
+            <mat-card-content style="display: grid; margin-left: 30px;">
+                <span>Delivery Address</span>
+                <span (click)="goToMap()"><strong>{{warehouseOrder?.formattedAddress}}</strong></span>
+                <span style="color: blue;"><strong>Deliver to {{customer?.firstName}}&nbsp;{{customer?.lastName}}, call her at {{customer?.mobile}}</strong></span>
+                <div style="display: flex;">
+                    <div style="display: grid;">
+                        <span>Name</span>
+                        <span><strong>{{customer?.firstName}}&nbsp;{{customer?.lastName}}</strong></span>
+                    </div>
+                    <div style="display: grid; margin-left: 30%;">
+                        <span>Phone</span>
+                        <span><strong>{{customer?.mobile}}</strong></span>
+                    </div>
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card style="margin-top: 30px;">
+            <mat-card-header>
+                <span>Warehouses = {{warehouseOrder.items}}</span>
+                <span style="margin-left: auto;">Service Cost = {{warehouseOrder?.serviceCost}} <br>Delivery Cost = {{warehouseOrder?.deliveryCost}}</span>
+            </mat-card-header>
+            <div class="separator separator-dashed my-6"></div>
+            <mat-card-content>
+                <mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="tracking">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>tracking</mat-header-cell>
+                        <mat-cell *matCellDef="let package">
+                            {{package.tracking}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="warehouse">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>warehouse</mat-header-cell>
+                        <mat-cell *matCellDef="let package">
+                            {{package.warehouse}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="weight">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>weight</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.weight}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="volWeight">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>volWeight</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.volWeight}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="length">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>length</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.length}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="width">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>width</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.width}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="height">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>height</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.height}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="typeName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.typeName}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>status</mat-header-cell>
+
+                        <mat-cell *matCellDef="let package">
+                            <div *ngIf="package.status == 0" class="status2"> Pendding </div>
+                            <div *ngIf="package.status == 1" class="status3"> Ready </div>
+                            <div *ngIf="package.status == 2" class="status0"> Delivery </div>
+                            <div *ngIf="package.status == 3" class="status1"> Completed </div>
+                        </mat-cell>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="log">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>log</mat-header-cell>
+                        <mat-cell *matCellDef="let package">
+                            <button mat-button (click)="log(package)"><mat-icon>search</mat-icon></button>
+                            <button mat-button (click)="print(package)"><mat-icon>print</mat-icon></button>
+                        </mat-cell>
+                    </ng-container> -->
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                </mat-table>
+            </mat-card-content>
+        </mat-card>
+        <!-- <mat-card style="margin-top: 30px;">
+            <mat-card-header>
+                Record Log
+            </mat-card-header>
+            <div class="separator separator-dashed my-6"></div>
+            <mat-card-content>
+                <mat-table [dataSource]="dataSourceLog" matSort>
+                    <ng-container matColumnDef="date">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>date</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.date}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="description">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>description</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.description}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="user">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>user</mat-header-cell>
+                        <mat-cell *matCellDef="let package">{{package.user}}</mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumnsLog"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumnsLog"></mat-row>
+                </mat-table>
+            </mat-card-content>
+        </mat-card> -->
+    </kt-portlet-body>
+</kt-portlet>

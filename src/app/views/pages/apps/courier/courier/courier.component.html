@@ -1,0 +1,63 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <div class="col-md-12 kt-margin-bottom-10-mobile" style="display: flex;">
+                <mat-icon style="margin-top: auto; margin-bottom: auto;">search</mat-icon>
+                <mat-form-field class="mat-form-field-fluid" style="width: 220px">
+                    <input matInput placeholder="Search by Order or Tracking" (keyup)="applyFilter($event.target.value)" [(ngModel)]="searchValue" />
+                </mat-form-field>
+            </div>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body style="padding-left: 15px; padding-right: 15px;">
+        <mat-tab-group [(selectedIndex)]='selectedIndex'>
+            <!-- <mat-tab>
+                <ng-template mat-tab-label>
+                    Por Recoger = {{orderPickUp.length}}
+                </ng-template>
+                <div class="row" *ngFor="let order of orderPickUp;" style="border-bottom: 1px grey solid; margin-bottom: 10px;" (click)="viewOrderDetail(order)">
+                    <div class="col">
+                        <div style="font-size: 15px;">{{order.customer}}</div>
+                        <div>Items: {{order.items}}</div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            <div style="width: fit-content;margin-left: auto;" *ngIf="order.packageStatus == 0" class="status0"> POR RECOGER </div>
+                            <div style="width: fit-content;margin-left: auto;" *ngIf="order.packageStatus == 1" class="status1"> RECOGIDO </div>
+                            <div style="width: fit-content;margin-left: auto;" *ngIf="order.packageStatus == 2" class="status2"> BODEGA </div>
+                            <div style="width: fit-content;margin-left: auto;" *ngIf="order.packageStatus == 3" class="status3"> POR ENTREGAR </div>
+                        </div>
+                        <div style="width: fit-content; margin-left: auto;"><strong>{{order.weight}}kg</strong></div>
+                    </div>
+                </div>
+            </mat-tab> -->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Por Entregar = {{deliveryOrders.length}}
+                </ng-template>
+                <div class="row" *ngFor="let order of deliveryOrders;" style="border-bottom: 1px grey solid; margin-bottom: 10px;" (click)="viewOrderDetail(order)">
+                    <div class="col">
+                        <div style="font-size: 15px;">{{order.customer}}</div>
+                        <div>Items: {{order.items}}</div>
+                    </div>
+                    <div class="col">
+                        <div>
+                            <div style="width: fit-content;margin-left: auto;" *ngIf="order.status == 0" class="status0"> Pending </div>
+                            <div style="width: fit-content;margin-left: auto;" *ngIf="order.status == 1" class="status1"> In Progress </div>
+                            <div style="width: fit-content;margin-left: auto;" *ngIf="order.status == 2" class="status2"> Completed </div>
+                            <div style="width: fit-content;margin-left: auto;" *ngIf="order.status == 3" class="status3"> Canceled </div>
+                        </div>
+                        <!-- <div style="width: fit-content; margin-left: auto;"><strong>{{order.weight}}kg</strong></div> -->
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+        <!-- <div class="row" style="margin-left: auto;
+		margin-right: auto;
+		width: fit-content;">
+			<button mat-raised-button color="primary" type="button">
+				<span>Edit Order</span>
+			</button>
+		</div> -->
+    </kt-portlet-body>
+</kt-portlet>

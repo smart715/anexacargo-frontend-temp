@@ -1,0 +1,103 @@
+<!-- begin:: Content Head -->
+<div class="subheader py-2 py-lg-4" [ngClass]="subheaderClasses" id="kt_subheader">
+	<div [ngClass]="subheaderContainerClasses" class="d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+    <!--begin::Info-->
+    <div class="d-flex align-items-center flex-wrap mr-2">
+      <!--begin::Page Title-->
+      <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+				{{title}}
+			</h5>
+      <!--end::Page Title-->
+
+      <!--begin::Actions-->
+      <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+      <span class="text-muted font-weight-bold mr-4">#XRS-45670</span>
+      <a href="#" class="btn btn-light-warning font-weight-bolder btn-sm">Add New</a>
+      <!--end::Actions-->
+    </div>
+    <!--end::Info-->
+
+    <!--begin::Toolbar-->
+    <div class="d-flex align-items-center">
+      <!--begin::Actions-->
+      <a href="#" class="btn btn-clean btn-hover-light-primary- active btn-sm font-weight-bold font-size-base mr-1">
+        Today
+      </a>
+      <a href="#" class="btn btn-clean btn-hover-light-primary-  btn-sm font-weight-bold font-size-base  mr-1">
+        Month
+      </a>
+      <a href="#" class="btn btn-clean btn-hover-light-primary-  btn-sm font-weight-bold font-size-base mr-1">
+        Year
+      </a>
+      <!--end::Actions-->
+
+      <!--begin::Dropdowns-->
+      <div ngbDropdown [placement]="'bottom-right'" class="dropdown dropdown-inline" title="Quick actions">
+				<a ngbDropdownToggle href="javascript:;" class="btn btn-icon" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+          <span class="svg-icon svg-icon-success svg-icon-2x" [inlineSVG]="'./assets/media/svg/icons/Files/File-plus.svg'"></span>
+        </a>
+				<div ngbDropdownMenu class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right py-3">
+          <!--begin::Navigation-->
+          <ul class="navi navi-hover py-5">
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+                <span class="navi-icon"><i class="flaticon2-drop"></i></span>
+                <span class="navi-text">New Group</span>
+              </a>
+            </li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+                <span class="navi-icon"><i class="flaticon2-list-3"></i></span>
+                <span class="navi-text">Contacts</span>
+              </a>
+            </li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+                <span class="navi-icon"><i class="flaticon2-rocket-1"></i></span>
+                <span class="navi-text">Groups</span>
+                <span class="navi-link-badge">
+                <span class="label label-light-primary label-inline font-weight-bold">new</span>
+            </span>
+              </a>
+            </li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+                <span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
+                <span class="navi-text">Calls</span>
+              </a>
+            </li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+                <span class="navi-icon"><i class="flaticon2-gear"></i></span>
+                <span class="navi-text">Settings</span>
+              </a>
+            </li>
+
+            <li class="navi-separator my-3"></li>
+
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+                <span class="navi-icon"><i class="flaticon2-magnifier-tool"></i></span>
+                <span class="navi-text">Help</span>
+              </a>
+            </li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+                <span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
+                <span class="navi-text">Privacy</span>
+                <span class="navi-link-badge">
+                <span class="label label-light-danger label-rounded font-weight-bold">5</span>
+            </span>
+              </a>
+            </li>
+          </ul>
+          <!--end::Navigation-->
+        </div>
+			</div>
+      <!--end::Dropdowns-->
+		</div>
+    <!--end::Toolbar-->
+  </div>
+</div>
+<!-- end:: Content Head -->

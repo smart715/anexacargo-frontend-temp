@@ -1,0 +1,68 @@
+<!--begin: Quick actions -->
+<div ngbDropdown placement="bottom-right"  autoClose="outside" class="dropdown dropdown-fluid">
+  <!--begin::Toggle-->
+  <div ngbDropdownToggle class="topbar-item">
+    <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1">
+			<ng-container *ngIf="!useSVG">
+        <i [ngClass]="icon"></i>
+      </ng-container>
+      <ng-container *ngIf="useSVG">
+        <span class="svg-icon svg-icon-xl svg-icon-primary" [inlineSVG]="icon"></span>
+      </ng-container>
+		</div>
+	</div>
+  <!--end::Toggle-->
+
+  <!--begin::Dropdown-->
+  <div ngbDropdownMenu class="dropdown-menu p-0 m-0 dropdown-menu-fit dropdown-menu-right dropdown-menu-anim-up dropdown-menu-xl">
+		<form>
+			<!--begin: Header -->
+			<div class="d-flex flex-column flex-center py-10 bgi-size-cover bgi-no-repeat rounded-top" [ngStyle]="{'background-image': 'url('+bgImage+')'}">
+				<h4 class="text-white font-weight-bold">Quick Actions</h4>
+				<span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">23 tasks pending</span>
+			</div>
+			<!--end: Header -->
+			<!--begin: Grid Nav -->
+			<div class="row row-paddingless">
+				<!--begin:Item-->
+				<div class="col-6">
+					<a href="javascript:;" class="d-block py-10 px-5 text-center bg-hover-light border-right border-bottom">
+						<span class="svg-icon svg-icon-3x svg-icon-success" [inlineSVG]="'./assets/media/svg/icons/Shopping/Euro.svg'"></span>
+						<span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Accounting</span>
+						<span class="d-block text-dark-50 font-size-lg">eCommerce</span>
+					</a>
+				</div>
+				<!--end:Item-->
+				<!--begin:Item-->
+				<div class="col-6">
+					<a href="javascript:;" class="d-block py-10 px-5 text-center bg-hover-light border-bottom">
+						<span class="svg-icon svg-icon-3x svg-icon-success" [inlineSVG]="'./assets/media/svg/icons/Communication/Mail-attachment.svg'"></span>
+						<span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Administration</span>
+						<span class="d-block text-dark-50 font-size-lg">Console</span>
+					</a>
+				</div>
+				<!--end:Item-->
+				<!--begin:Item-->
+				<div class="col-6">
+					<a href="javascript:;" class="d-block py-10 px-5 text-center bg-hover-light border-right">
+						<span class="svg-icon svg-icon-3x svg-icon-success" [inlineSVG]="'./assets/media/svg/icons/Shopping/Box2.svg'"></span>
+						<span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Projects</span>
+						<span class="d-block text-dark-50 font-size-lg">Pending Tasks</span>
+					</a>
+				</div>
+				<!--end:Item-->
+				<!--begin:Item-->
+				<div class="col-6">
+					<a href="javascript:;" class="d-block py-10 px-5 text-center bg-hover-light">
+						<span class="svg-icon svg-icon-3x svg-icon-success" [inlineSVG]="'./assets/media/svg/icons/Communication/Group.svg'"></span>
+						<span class="d-block text-dark-75 font-weight-bold font-size-h6 mt-2 mb-1">Customers</span>
+						<span class="d-block text-dark-50 font-size-lg">Latest cases</span>
+					</a>
+				</div>
+				<!--end:Item-->
+			</div>
+		</form>
+	</div>
+  <!--end::Dropdown-->
+</div>
+<!--end: Quick actions -->

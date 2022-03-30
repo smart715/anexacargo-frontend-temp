@@ -1,0 +1,46 @@
+<div class="card card-custom"
+	[ngClass]="{'card-body-progress' : viewLoading, 'card-body-progress card-body-progress-overlay' : loadingAfterSubmit }">
+	<div class="card-header">
+		<div class="card-title">
+			<h3 class="card-label">{{data.title}}</h3>
+		</div>
+	</div>
+	<div class="form">
+		<div class="card-body">
+			<div class="card-body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+			<div class="timeline timeline-5 mt-3">
+				<div class="timeline-item align-items-start" *ngFor="let message of data.messages">
+					<div class="timeline-label font-weight-bolder text-dark-75 font-size-lg text-right pr-3"></div>
+					<div class="timeline-badge">
+						<i class="fa fa-genderless text-{{message.statusCssClass}} icon-xxl"></i>
+					</div>
+					<div class="timeline-content text-dark-50 mr-5">{{message.text}}
+						<span
+							class="label label-lg label-light-{{message.statusCssClass}} label-inline">{{message.statusTitle}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<div class="mr-2"></div>
+				<div>
+					<mat-form-field>
+						<mat-select placeholder="Status" [formControl]="selectedStatusForUpdate">
+							<mat-option *ngFor="let status of data.statuses" value="{{ status.value }}">{{status.text}}
+							</mat-option>
+						</mat-select>
+						<mat-hint align="start">Select
+							<strong>Status</strong> for rows updating</mat-hint>
+					</mat-form-field>
+					&nbsp;
+					<button type="button" mat-raised-button color="primary" (click)="updateStatus()"
+						[disabled]="selectedStatusForUpdate.value.length == 0">Update status</button>&nbsp;
+					<button type="button" mat-raised-button (click)="onNoClick()">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

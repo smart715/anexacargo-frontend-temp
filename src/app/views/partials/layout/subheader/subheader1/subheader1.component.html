@@ -1,0 +1,114 @@
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-4" [ngClass]="subheaderClasses" id="kt_subheader" style="left: 0px;">
+	<div [ngClass]="subheaderContainerClasses" class="d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+    <!--begin::Info-->
+    <div class="d-flex align-items-center flex-wrap mr-1">
+      <!--begin::Page Heading-->
+      <div class="d-flex align-items-baseline mr-5">
+        <ng-container *ngIf="title">
+          <!--begin::Page Title-->
+          <!-- <h5 class="text-dark font-weight-bold my-2 mr-5">
+            {{title}}
+          </h5> -->
+        </ng-container>
+        <!--end::Page Title-->
+
+        <!--begin::Breadcrumb-->
+        <ng-container *ngIf="breadcrumbs.length > 0">
+          <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2">
+            <li class="breadcrumb-item"><a href="#"><i class="flaticon2-shelter text-muted icon-1x"></i></a></li>
+            <ng-container *ngFor="let item of breadcrumbs">
+              <li class="breadcrumb-item">
+                <a [routerLink]="item.page" [queryParams]="item.queryParams" class="text-muted">
+                  {{item.title}}
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+        </ng-container>
+        <!--end::Breadcrumb-->
+      </div>
+      <!--end::Page Heading-->
+    </div>
+    <!--end::Info-->
+
+    <div class="d-flex align-items-center">
+      <ng-container *ngIf="displayDaterangepicker">
+        <!--begin::Daterange-->
+        <a href="#" class="btn btn-light btn-sm font-weight-bold mr-3" id="kt_dashboard_daterangepicker" data-toggle="tooltip" title="Select dashboard daterange" data-placement="left">
+          <span class="text-muted font-weight-bold mr-2" id="kt_dashboard_daterangepicker_title">Today</span>
+          <span class="text-primary font-weight-bold" id="kt_dashboard_daterangepicker_date">Aug 16</span>
+        </a>
+        <!--end::Daterange-->
+      </ng-container>
+
+      <!--begin::Actions-->
+      <a href="#" class="btn btn-light font-weight-bold btn-sm">
+        Actions
+      </a>
+      <!--end::Actions-->
+
+      <!--begin::Dropdown-->
+      <div ngbDropdown [placement]="'bottom-right'"  class="dropdown dropdown-inline" ngbTooltip="Quick actions">
+				<a ngbDropdownToggle href="javascript:;" class="btn btn-icon">
+					<span class="svg-icon svg-icon-success svg-icon-2x" [inlineSVG]="'./assets/media/svg/icons/Files/File-plus.svg'"></span>
+				</a>
+				<div ngbDropdownMenu class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right">
+          <!--begin::Navigation-->
+          <ul class="navi navi-hover">
+            <li class="navi-header font-weight-bold py-5">
+              <span class="font-size-lg">Choose Label:</span>
+              <i class="flaticon2-information icon-md text-muted" data-toggle="tooltip" data-placement="right" title="Click to learn more..."></i>
+            </li>
+            <li class="navi-separator mb-3 opacity-70"></li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+            <span class="navi-text">
+                <span class="label label-xl label-inline label-light-success">Customer</span>
+            </span>
+              </a>
+            </li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+            <span class="navi-text">
+                <span class="label label-xl label-inline label-light-danger">Partner</span>
+            </span>
+              </a>
+            </li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+            <span class="navi-text">
+                <span class="label label-xl label-inline label-light-warning">Suplier</span>
+            </span>
+              </a>
+            </li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+            <span class="navi-text">
+                <span class="label label-xl label-inline label-light-primary">Member</span>
+            </span>
+              </a>
+            </li>
+            <li class="navi-item">
+              <a href="#" class="navi-link">
+            <span class="navi-text">
+                <span class="label label-xl label-inline label-light-dark">Staff</span>
+            </span>
+              </a>
+            </li>
+            <li class="navi-separator mt-3 opacity-70"></li>
+            <li class="navi-footer pt-5 pb-4">
+              <a class="btn btn-clean font-weight-bold btn-sm" href="#">
+                <i class="ki ki-plus icon-sm"></i>
+                Add new
+              </a>
+            </li>
+          </ul>
+          <!--end::Navigation-->
+				</div>
+			</div>
+      <!--end::Dropdown-->
+    </div>
+	</div>
+</div>
+<!--end::Subheader-->

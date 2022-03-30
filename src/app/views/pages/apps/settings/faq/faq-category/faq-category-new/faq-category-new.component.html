@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-header>
+        <div style="height: fit-content; margin-top: auto;">FAQ Categories</div>
+        <button style="margin-left: auto;" type="button" mat-raised-button color="primary" (click)="add()">
+            {{buttonName}}
+        </button>
+    </mat-card-header>
+    <div class="separator separator-dashed my-6"></div>
+    <mat-card-content>
+        <form class="card-body" [formGroup]="categoryForm">
+            <mat-form-field class="mat-form-field-fluid">
+                <input matInput placeholder="Enter FAQ Category" formControlName="category" />
+                <mat-error>FAQ Category is
+                    <strong>required</strong>
+                </mat-error>
+                <mat-hint align="start">Please enter
+                    <strong>FAQ Category</strong>
+                </mat-hint>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+</mat-card>

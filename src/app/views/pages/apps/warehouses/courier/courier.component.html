@@ -1,0 +1,156 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            <span>Couriers</span>
+            <!-- <span style="margin-left: 10px; margin-right: 10px;">|</span>
+            <span>Total</span> -->
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button (click)="exportToExcel()" mat-button color="primary" type="button" style="margin-right: 20px;">
+                <mat-icon> table_chart</mat-icon>
+                EXPORT
+            </button>
+            <button (click)="addCourier()" mat-raised-button color="primary" type="button" style="margin-right: 20px;">
+                <span>Add Courier</span>
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div class="my-overlay" *ngIf="showOverlay">
+            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+        </div>
+        <div class="row">
+
+            <div class="col-md-2">
+                <mat-form-field class="mat-form-field-fluid">
+                    <input matInput placeholder="Search courier" (keyup)="applyFilter($event.target.value)" />
+                    <mat-hint align="start">
+                        <strong>Search</strong> by name, email or phone
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-2">
+                <mat-form-field>
+                    <mat-select [(value)]="filterStatus" (selectionChange)="filterBystatus()"
+                        placeholder="Filter by Status">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="0">In Progress</mat-option>
+                        <mat-option value="1">Completed</mat-option>
+                    </mat-select>
+                    <mat-hint align="start">
+                        <strong>Filter</strong> by Status
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-2">
+                <mat-form-field>
+                    <mat-select [(value)]="filterType" (selectionChange)="filterByType()" placeholder="Filter by Type">
+                        <mat-option value="">
+                            All
+                        </mat-option>
+                        <mat-option value="Air">
+                            Air
+                        </mat-option>
+                        <mat-option value="Maritime">
+                            Maritime
+                        </mat-option>
+                        <!-- <mat-option value="China">
+                            China
+                        </mat-option> -->
+                    </mat-select>
+                    <mat-hint align="start">
+                        <strong>Filter</strong> by Type
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4" style="display: flex;" [formGroup]="filterForm">
+                <mat-form-field style="margin-left: 20px;">
+                    <mat-label>From</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="fromDate"
+                        (dateChange)="dateFilter($event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-hint align="start">
+                        <strong>Filter</strong> by Date
+                    </mat-hint>
+                </mat-form-field>
+                <mat-form-field style="margin-left: 20px;">
+                    <mat-label>To</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="toDate" (dateChange)="dateFilter($event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-table [dataSource]="dataSourceCouriers" matSort>
+
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                <mat-cell *matCellDef="let courier; let i = index">{{courier.idcourier}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>date</mat-header-cell>
+                <mat-cell *matCellDef="let courier">{{courier.date}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="courier">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>courier</mat-header-cell>
+                <mat-cell *matCellDef="let courier">{{courier.courier}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>type</mat-header-cell>
+                <mat-cell *matCellDef="let courier">
+                    <ng-container *ngIf="courier.type == '0'">
+                        Air
+                    </ng-container>
+                    <ng-container *ngIf="courier.type == '1'">
+                        Maritime
+                    </ng-container>
+                    <ng-container *ngIf="courier.type != '1' && courier.type != '0'">
+                        China
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="warehouses">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>warehouses</mat-header-cell>
+                <mat-cell *matCellDef="let courier">
+                    {{courier.warehouses}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="cost">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>cost</mat-header-cell>
+                <mat-cell *matCellDef="let courier">${{courier.cost}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="sale">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>sale</mat-header-cell>
+                <mat-cell *matCellDef="let courier">
+                    ${{courier.sale}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                <mat-cell *matCellDef="let courier">
+                    <div style="width: fit-content;margin-right: auto;" *ngIf="courier.status == 0" class="status0"> In
+                        Progress </div>
+                    <div style="width: fit-content;margin-right: auto;" *ngIf="courier.status == 1" class="status1">
+                        Completed </div>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50]" [length]="10" [showFirstLastButtons]="true">
+        </mat-paginator>
+    </kt-portlet-body>
+</kt-portlet>

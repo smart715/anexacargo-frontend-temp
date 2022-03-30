@@ -1,0 +1,145 @@
+<mat-card>
+    <mat-card-header>
+        <span style="font-size: x-large;">{{title == "edit" ? 'Edit User' : 'Add User'}}</span>
+        <button mat-raised-button color="white" type="button" style="margin-left: auto;
+        width: 90px;
+        margin-right: 20px;" (click)="cancel()">
+            <span>Cancel</span>
+        </button>
+        <button mat-raised-button color="primary" type="button" style="width: 90px;" (click)="save()">
+            <mat-icon style="margin-top: 4px;">save</mat-icon>
+            <span>Save</span>
+        </button>
+    </mat-card-header>
+    <div class="separator separator-dashed my-6"></div>
+    <mat-card-content>
+
+        <form class="card-body" [formGroup]="userForm">
+
+            <div class="row">
+                <mat-form-field class="mat-form-field-fluid" style="margin-right: 20px;">
+                    <input matInput placeholder="Enter Name" formControlName="name" />
+                    <mat-error>Name is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Name</strong>
+                    </mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fluid" style="margin-right: 20px;">
+                    <input matInput placeholder="Enter User" formControlName="user" />
+                    <mat-error>User is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>User</strong>
+                    </mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fluid" style="margin-right: 20px;">
+                    <input matInput placeholder="Enter Email" formControlName="email" />
+                    <mat-error>Email is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Email</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <mat-form-field class="mat-form-field-fluid" style="margin-right: 20px;">
+                    <mat-select placeholder="Role" formControlName="role" (selectionChange)="roleChange()">
+                        <mat-option value="10">SuperAdmin</mat-option>
+                        <mat-option value="1">Admin</mat-option>
+                        <mat-option value="2">Messenger</mat-option>
+                    </mat-select>
+                    <mat-error>Role is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select placeholder="Status" formControlName="status">
+                        <mat-option value="0">
+                            <div class="status3">Active</div>
+                        </mat-option>
+                        <mat-option value="1">
+                            <div class="status1">InActive</div>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Status is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="mat-form-field-fluid" style="margin-left: 20px;">
+                    <input matInput placeholder="Enter Password" [type]="hide ? 'password' : 'text'" formControlName="password">
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-error>Password is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Password</strong>
+                    </mat-hint>
+                </mat-form-field>
+
+
+
+                <!-- <mat-form-field class="mat-form-field-fluid" style="margin-left: 20px;">
+                    <input matInput placeholder="Enter Password" formControlName="password" />
+                    <mat-error>Password is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-hint align="start">Please enter
+                        <strong>Password</strong>
+                    </mat-hint>
+                </mat-form-field>
+                 -->
+            </div>
+        </form>
+
+        <button *ngIf="title == 'edit'" mat-raised-button color="primary" type="button" style="height: 40px;
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: auto;
+        margin-right: 20px;" (click)="delete()">
+            <mat-icon style="margin-top: 4px;">delete</mat-icon>
+            <span>delete</span>
+        </button>
+
+        <ng-container *ngIf="permissionFlag">
+            <h6>
+                Permissions:
+            </h6>
+
+            <div class="role-timeline-3 mb-5">
+                <div class="role-timeline-3-items role-timeline-3-items-rolePermissions">
+                    <div *ngFor="let permission of permissions" class="role-timeline-3-inner">
+                        <div class="role-timeline-3-item role-border-bottom-grey role-py-15 role-bg-grey">
+                            <span class="role-timeline-3-item-time">
+                                <!-- <mat-checkbox [(ngModel)]="_rootRole.isSelected"
+                                    (change)="isSelectedChanged($event, _rootRole)" [disabled]="role.isCoreRole">
+                                    {{ _rootRole.title }}</mat-checkbox> -->
+                                    {{permission.title}}
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center role-border-bottom-grey role-py-15 role-bg-grey">
+                            <div class="role-timeline-3-item role-timeline-3-item-child" *ngFor="let role of permission.role">
+                                <span class="role-timeline-3-item-time">
+                                    <mat-checkbox [(ngModel)]="role.value">
+                                        <!-- (change)="isSelectedChanged($event, _childRole)" [disabled]="role.isCoreRole"> -->
+                                        {{ role.title }}
+                                    </mat-checkbox>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+    </mat-card-content>
+</mat-card>

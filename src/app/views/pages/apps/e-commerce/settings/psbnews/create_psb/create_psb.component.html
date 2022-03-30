@@ -1,0 +1,26 @@
+<mat-card>
+    <mat-card-header style="font-size: 15px;">
+        <strong>Add News</strong>
+        <button style="margin-left: auto; margin-right: 20px;" mat-raised-button color="primary" type="button"
+            (click)="savebox()">
+            <mat-icon style="margin-top: 5px;"> save</mat-icon>
+            <span>Save</span>
+        </button>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="separator separator-dashed my-6"></div>
+        <mat-form-field>
+            <mat-select placeholder="Select by username" [(value)]="defaultValue">
+                <mat-option *ngFor="let opt of all_customers" value="{{opt.idcustomers}}"
+                    (onSelectionChange)="changebox(opt.idcustomers)">AEX{{opt.idcustomers}}
+                </mat-option>
+            </mat-select>
+            <mat-hint align="start">
+                <strong>Select</strong> by username
+            </mat-hint>
+        </mat-form-field>
+        <!-- <ckeditor [editor]="Editor" (change)="onChange($event)"></ckeditor> -->
+        <!-- <ckeditor id="ownEditor"></ckeditor> -->
+        <!-- <div id="editorpsb"></div> -->
+    </mat-card-content>
+</mat-card>

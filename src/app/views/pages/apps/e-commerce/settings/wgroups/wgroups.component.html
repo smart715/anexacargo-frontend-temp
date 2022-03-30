@@ -1,0 +1,88 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            WGroups
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button mat-raised-button color="primary" type="button" (click)="viewGroup('')">
+				<mat-icon style="margin-top: 4px;">add</mat-icon>
+				<span>Add Group</span>
+			</button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+        <div class="col-md-2 kt-margin-bottom-10-mobile">
+            <mat-form-field class="mat-form-field-fluid">
+                <input matInput placeholder="Search" (keyup)="applyFilter($event.target.value)" />
+                <mat-hint align="start">
+                    <strong>Search</strong> in all fields
+                </mat-hint>
+            </mat-form-field>
+        </div>
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="group">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Group</mat-header-cell>
+                <mat-cell *matCellDef="let group" (click)="viewGroup(group)">{{group.name}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="wPrice">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Air Cost</mat-header-cell>
+                <mat-cell *matCellDef="let group" (click)="viewGroup(group)">{{group.wPrice}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="vPrice">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Air Volumetric</mat-header-cell>
+                <mat-cell *matCellDef="let group" (click)="viewGroup(group)">{{group.vPrice}}</mat-cell>
+            </ng-container>
+
+
+
+            <ng-container matColumnDef="cubic">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Maritime</mat-header-cell>
+                <mat-cell *matCellDef="let group" (click)="viewGroup(group)">{{group.cubic}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="mWeight">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Maritime trámites</mat-header-cell>
+                <mat-cell *matCellDef="let group" (click)="viewGroup(group)">{{group.mWeight}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="bl">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Air Pr Tramites</mat-header-cell>
+                <mat-cell *matCellDef="let group" (click)="viewGroup(group)">{{group.bl}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="sed">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Air PV Tramites</mat-header-cell>
+                <mat-cell *matCellDef="let group" (click)="viewGroup(group)">{{group.sed}}</mat-cell>
+            </ng-container>
+
+
+
+            <!-- <ng-container matColumnDef="m3China">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>FT3China</mat-header-cell>
+                <mat-cell *matCellDef="let group" (click)="viewGroup(group)">{{group.m3China}}</mat-cell>
+            </ng-container> -->
+
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                <mat-cell *matCellDef="let group">
+                    <button mat-button color="primary" type="button" (click)="deleteGroup(group)">
+                        <mat-icon> delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [showFirstLastButtons]="true" [pageSize]="10" [length]="10" [pageSizeOptions]="[10, 20, 30, 40]">
+        </mat-paginator>
+
+    </kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,112 @@
+<kt-portlet>
+    <kt-portlet-header [class]="'card-head-lg'">
+        <ng-container ktPortletTitle>
+            Factura 315 | 22/01/19
+        </ng-container>
+        <ng-container ktPortletTools>
+            <button mat-raised-button color="warn" type="button">
+                <span>No Pagado</span>
+            </button>
+        </ng-container>
+    </kt-portlet-header>
+    <kt-portlet-body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <img style="width: 100px;" src="image_url" />
+                    <div><strong>www.anexacargo.com</strong></div>
+                </div>
+                <div class="col" style="text-align: right;">
+                    <div style="font-size: 2.1422rem;font-weight: 500;">PAID</div>
+                    <div>Invoice #765ed153</div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col">
+                    <div>Street King William, 123</div>
+                    <div>Level 2, C, 442456</div>
+                    <div>San Francisco, CA, USA</div>
+                </div>
+                <div class="col" style="text-align: center;">
+                    <div>Company No. 4675933</div>
+                    <div>EU VAT No. 949 67545 45</div>
+                </div>
+                <div class="col" style="text-align: right;">
+                    <div>Email: accounts@devias.io</div>
+                    <div>Tel: (+40) 652 3456 23</div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col">
+                    <div><strong>Due date</strong></div>
+                    <div>16 Jul 2020</div>
+                </div>
+                <div class="col" style="text-align: center;">
+                    <div><strong>Date of issue</strong></div>
+                    <div>31 Jul 2020</div>
+                </div>
+                <div class="col" style="text-align: right;">
+                    <div><strong>Reference</strong></div>
+                    <div>DEV-9483</div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col">
+                    <div><strong>Billed to</strong></div>
+                    <div>Tracey Herman</div>
+                    <div>Countdown Grey Lynn</div>
+                    <div>6934656584231</div>
+                    <div>271 Richmond Rd, Grey Lynn, Auckland 1022, New Zealand</div>
+                </div>
+            </div>
+        </div>
+
+        <mat-table [dataSource]="dataSource" style="margin-top: 20px;">
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+                <mat-cell *matCellDef="let order" (click)="packageView()">{{order.description}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="discount">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let order" (click)="packageView()">{{order.discount}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total">
+                <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+                <mat-cell *matCellDef="let order" (click)="packageView()">{{order.total}}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+    </kt-portlet-body>
+</kt-portlet>
+<mat-card style="margin-top:20px">
+    <div style="font-size: 15px;
+	margin: 20px;">
+        <strong>Pagos = 50</strong>
+    </div>
+    <mat-table [dataSource]="dataSourcePagos">
+        <ng-container matColumnDef="paymentID">
+            <mat-header-cell *matHeaderCellDef>Payment ID</mat-header-cell>
+            <mat-cell *matCellDef="let pago" (click)="packageView()">{{pago.paymentID}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+            <mat-cell *matCellDef="let pago" (click)="packageView()">{{pago.date}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+            <mat-cell *matCellDef="let pago" (click)="packageView()">{{pago.description}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+            <mat-cell *matCellDef="let pago" (click)="packageView()">{{pago.amount}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumnsPagos"></mat-header-row>
+
+        <mat-row *matRowDef="let row; columns: displayedColumnsPagos"></mat-row>
+    </mat-table>
+</mat-card>

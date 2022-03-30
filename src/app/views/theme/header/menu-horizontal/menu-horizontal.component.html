@@ -1,0 +1,155 @@
+<!--begin::Header Menu Wrapper-->
+<div #headerMenuOffcanvas class="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
+    <ng-container *ngIf="!headerMenuSelfDisplay">
+        <!--begin::Header Logo-->
+        <div class="header-logo">
+            <a href="javascript:;" routerLink="/">
+                <img alt="logo" [attr.src]="headerLogo" />
+            </a>
+        </div>
+        <!--end::Header Logo-->
+    </ng-container>
+
+    <!--begin::Header Menu-->
+    <div ktMenu [options]="menuOptions" id="kt_header_menu" class="header-menu header-menu-mobile " [ngClass]="headerMenuClasses">
+        <!--begin::Header Nav-->
+        <!-- <ul class="menu-nav" [ngClass]="htmlClassService.getClasses('header_menu_nav', true)">
+			<ng-container *ngFor="let item of menuHorService.menuList$ | async">
+				<ng-container *ngIf="item.title" [ngTemplateOutlet]="menuTemplate" [ngTemplateOutletContext]="{ item: item }"></ng-container>
+			</ng-container>
+		</ul> -->
+        <button mat-button (click)="warehouse()" *ngIf="userRole == 1 || userRole == 10">Trackings</button>
+        <button mat-button (click)="couriers()" *ngIf="userRole == 1 || userRole == 10">Couriers</button>
+        <!-- <button mat-button (click)="warehouseOrder()" *ngIf="userRole == 1 || userRole == 10">Delivery</button> -->
+        <!-- <button mat-button (click)="news()" *ngIf="userRole == 1 || userRole == 10">News</button> -->
+        <!-- <button mat-button (click)="faq()" *ngIf="userRole == 1 || userRole == 10">FAQ</button> -->
+
+
+        <button mat-button (click)="customers()" (contextmenu)="onRightClick($event)" *ngIf="userRole == 1 || userRole == 10">Customers</button>
+        <!-- <button mat-button (click)="orders()" *ngIf="userRole == 1 || userRole == 10">Orders</button> -->
+        <!-- <button mat-button (click)="packages()" *ngIf="userRole == 1 || userRole == 10">Packages</button> -->
+        <!-- <button mat-button (click)="reports()" *ngIf="userRole == 1 || userRole == 10">Invoices</button> -->
+        <button mat-button (click)="settings()" *ngIf="userRole == 1 || userRole == 10">Settings</button>
+        <button mat-button (click)="courier()" *ngIf="userRole == 2">Courier Web App</button>
+        <button mat-button (click)="myOrders()" *ngIf="userRole == 0">My Orders</button>
+        <button mat-button (click)="invoice()" *ngIf="userRole == 0">Mis Facturas</button>
+        <button mat-button (click)="customer_orders()" *ngIf="userRole == 0">Delivery Quote</button>
+        <button mat-button (click)="tracking()" *ngIf="userRole == 0">Search Tracking</button>
+
+
+        <!--end::Header Nav-->
+    </div>
+    <!--end::Header Menu-->
+</div>
+<!--end::Header Menu Wrapper-->
+
+<ng-template #menuTemplate let-item="item" let-parentItem="parentItem">
+    <li [attr.aria-haspopup]="true" [attr.data-menu-toggle]="getItemAttrSubmenuToggle(item)" [ngClass]="getItemCssClasses(item)">
+
+        <!-- if item has submenu -->
+        <ng-container *ngIf="item.submenu">
+            <a href="javascript:;" class="menu-link menu-toggle">
+
+                <ng-container [ngTemplateOutlet]="menuItemInnerTemplate" [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>
+
+                <ng-container *ngIf="rootArrowEnabled">
+                    <!-- arrow icons -->
+                    <i *ngIf="item.submenu && item.root" class="menu-arrow"></i>
+                </ng-container>
+                <!-- else arrow icons -->
+                <i *ngIf="item.submenu && !item.root" class="menu-arrow"></i>
+            </a>
+        </ng-container>
+
+        <!-- if item hasn't sumbenu -->
+        <ng-container *ngIf="!item.submenu">
+            <a [routerLink]="item.page" class="menu-link">
+                <ng-container [ngTemplateOutlet]="menuItemInnerTemplate" [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>
+            </a>
+        </ng-container>
+
+        <!-- if menu item has submenu child then recursively call new menu item component -->
+        <ng-container *ngIf="item.submenu">
+            <div class="menu-submenu" [ngClass]="getItemMenuSubmenuClass(item)" [ngStyle]="{ 'width': item.submenu.width }">
+                <span class="menu-arrow" [ngClass]="{ 'menu-arrow-adjust': item.root }"></span>
+
+                <ul *ngIf="item.submenu?.length" class="menu-subnav">
+                    <ng-container *ngFor="let child of item.submenu">
+                        <ng-container [ngTemplateOutlet]="menuTemplate" [ngTemplateOutletContext]="{ item: child, parentItem: item }">
+                        </ng-container>
+                    </ng-container>
+                </ul>
+
+                <ul *ngIf="item.submenu.items?.length" class="menu-subnav">
+                    <ng-container *ngFor="let child of item.submenu.items">
+                        <ng-container [ngTemplateOutlet]="menuTemplate" [ngTemplateOutletContext]="{ item: child, parentItem: item }">
+                        </ng-container>
+                    </ng-container>
+                </ul>
+
+                <div *ngIf="item.submenu.type === 'mega' && item.submenu.columns?.length" class="menu-subnav">
+                    <ul class="menu-content">
+                        <ng-container *ngFor="let child of item.submenu.columns">
+                            <ng-container [ngTemplateOutlet]="menuColumnTemplate" [ngTemplateOutletContext]="{ item: child }"></ng-container>
+                        </ng-container>
+                    </ul>
+                </div>
+
+            </div>
+        </ng-container>
+    </li>
+</ng-template>
+
+<!-- item inner -->
+<ng-template #menuItemInnerTemplate let-item="item" let-parentItem="parentItem">
+    <!-- if menu item has icon -->
+    <ng-container *ngIf="item.icon">
+        <i class="menu-icon" [ngClass]="item.icon"></i>
+    </ng-container>
+
+    <ng-container *ngIf="!item.icon">
+        <!-- if menu item using bullet -->
+        <i *ngIf="parentItem && parentItem.bullet === 'dot' || item.bullet === 'dot'" class="menu-link-bullet menu-link-bullet--dot">
+			<span></span>
+		</i>
+        <i *ngIf="parentItem && parentItem.bullet === 'line' || item.bullet === 'line'" class="menu-link-bullet menu-link-bullet--line">
+			<span></span>
+		</i>
+    </ng-container>
+
+    <ng-container *ngIf="!item.badge; else menuLinkBadge">
+        <span class="menu-item-here"></span>
+        <!-- menu item title text -->
+        <span class="menu-text" [translate]="item.translate">
+			{{item.title}}
+		</span>
+    </ng-container>
+
+    <ng-template #menuLinkBadge>
+        <!-- menu item with badge -->
+        <span class="menu-text" [translate]="item.translate">{{item.title}}</span>
+        <span class="menu-link-badge">
+			<span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill" [ngClass]="item.badge.type" [translate]="item.badge.translate">{{item.badge.value}}</span>
+        </span>
+    </ng-template>
+</ng-template>
+
+<!-- item column -->
+<ng-template #menuColumnTemplate let-item="item">
+    <li class="menu-item">
+        <h3 class="menu-heading menu-toggle">
+            <span class="menu-text" [translate]="item.heading.translate">
+				{{item.heading.title}}
+			</span>
+            <i class="menu-ver-arrow la la-angle-right"></i>
+        </h3>
+        <ng-container *ngIf="item.items?.length">
+            <ul class="menu-inner">
+                <ng-container *ngFor="let child of item.items">
+                    <ng-container [ngTemplateOutlet]="menuTemplate" [ngTemplateOutletContext]="{ item: child, parentItem: item }">
+                    </ng-container>
+                </ng-container>
+            </ul>
+        </ng-container>
+    </li>
+</ng-template>

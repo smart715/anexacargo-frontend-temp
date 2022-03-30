@@ -1,0 +1,107 @@
+<kt-portlet>
+    <mat-card style="background: chocolate;">
+        <div style="font-size: 24px;
+        color: white;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;">
+            SCAN DE READY
+        </div>
+    </mat-card>
+    <kt-portlet-body>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-card>
+                    <mat-card-header>
+                        Tracking
+                    </mat-card-header>
+                    <div class="separator separator-dashed my-6"></div>
+                    <mat-card-content [formGroup]="scanForm">
+                        <mat-form-field class="mat-form-field-fluid" style="width: 80%;font-size: 50px;margin-left: auto;margin-right: auto;">
+                            <input #scanInput matInput placeholder="Scan by Tracking" formControlName="trackingControl" (keydown.enter)="scan($event)" />
+                        </mat-form-field>
+
+                        <div style="font-size: 50px;
+                        width: fit-content;
+                        margin-left: auto;
+                        margin-right: auto;
+                        margin-top: 30px;
+                        padding: 25px;
+                        margin-bottom: 30px;" class="status0" *ngIf="statusTitle == 'aceptado'; else elsetemp">
+                            {{statusTitle}}
+                        </div>
+                        <ng-template #elsetemp>
+                            <ng-container *ngIf="statusTitle != undefined">
+                                <div style="font-size: 50px;
+                                width: fit-content;
+                                margin-left: auto;
+                                margin-right: auto;
+                                margin-top: 30px;
+                                padding: 25px;
+                                margin-bottom: 30px;" class="status2">
+                                    {{statusTitle}}
+                                </div>
+                            </ng-container>
+                        </ng-template>
+
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="col-md-6">
+                <mat-card>
+                    <mat-card-header>
+                        SCAN LOG
+                    </mat-card-header>
+                    <div class="separator separator-dashed my-6"></div>
+                    <mat-card-content>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-3" style="margin-left: 20px;">Tracking</div>
+                            <div class="col-3">Time</div>
+                            <div class="col-4">Customer</div>
+
+                        </div>
+                        <div class="row" *ngFor="let warehouse of scanedWarehouse" style="margin-top: 10px;">
+                            <div class="col-3" style="margin-left: 20px;">{{warehouse.tracking}}</div>
+                            <div class="col-3">{{warehouse.vtoday}}</div>
+                            <div class="col-4">{{warehouse.idcustomers}}&nbsp;|&nbsp;{{warehouse.customer}}</div>
+                            <div style="background: #3699FF; color: #cbe2fe; text-align: center; border-radius: 10px; margin-left: auto; margin-right: 20px; width: 15px; height: 15px; margin: auto;font-size: 11px;">
+                                &#10003;
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="scanedWarehouse.length != 0">
+                            <button style="margin-left: auto;margin-right: auto; margin-top:20px" mat-raised-button color="primary" type="button" (click)="publish()">
+                                <span>PUBLISH</span>
+                            </button>
+                        </div>
+
+
+
+
+                        <!-- <div class="row" style="margin-top: 10px;">
+                                <div>{{table.assignedTo}}</div>
+                                <div style="margin-left: auto; margin-right: 20px;">Order&nbsp;&nbsp;{{table.idorders}}</div>
+                            </div>
+                            <div>
+                                <div class="row" *ngFor="let package of table.packages" style="margin-top: 5px;">
+                                    <div class="col-md-6">
+                                        {{package.idpackages}}
+                                    </div>
+                                    <div class="col-md-5">
+                                        {{table.assignedTo}}
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div *ngIf="getCheck(package.status)" style="background: #3699FF; color: #cbe2fe; text-align: center; border-radius: 10px;">
+                                            &#10003;
+                                        </div>
+                                        <div *ngIf="!getCheck(package.status)" style="background: grey; color: #ebedf3; text-align: center; border-radius: 10px;">
+                                            &#10003;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </kt-portlet-body>
+</kt-portlet>

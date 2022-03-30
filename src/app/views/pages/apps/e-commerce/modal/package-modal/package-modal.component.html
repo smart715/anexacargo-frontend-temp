@@ -1,0 +1,29 @@
+<mat-card style="margin-top: 30px;">
+    <mat-card-header>
+       {{data.pack.tracking}}Log
+    </mat-card-header>
+    <div class="separator separator-dashed my-6"></div>
+    <mat-card-content>
+        <mat-table [dataSource]="dataSourceLog" matSort>
+            <ng-container matColumnDef="date">
+                <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                <mat-header-cell *matHeaderCellDef mat-sort-header>date</mat-header-cell>
+                <mat-cell *matCellDef="let package">{{package.date}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                <mat-header-cell *matHeaderCellDef mat-sort-header>description</mat-header-cell>
+                <mat-cell *matCellDef="let package">{{package.description}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="user">
+                <!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+                <mat-header-cell *matHeaderCellDef mat-sort-header>user</mat-header-cell>
+                <mat-cell *matCellDef="let package">{{package.user}}</mat-cell>
+            </ng-container>
+            
+            <mat-header-row *matHeaderRowDef="displayedColumnsLog"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumnsLog"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>

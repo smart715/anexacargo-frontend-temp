@@ -1,0 +1,71 @@
+<kt-portlet>
+	<kt-portlet-header [class]="'card-head-lg'">
+		<ng-container ktPortletTitle>
+			Users| {{total}} total
+		</ng-container>
+		<ng-container ktPortletTools>
+			<button mat-raised-button color="primary" type="button" (click)="userDetail('')">
+				<mat-icon style="margin-top: 4px;">add</mat-icon>
+				<span>Add User</span>
+			</button>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="col-md-2 kt-margin-bottom-10-mobile">
+			<mat-form-field class="mat-form-field-fluid">
+				<input matInput placeholder="Search customer" (keyup)="applyFilter($event.target.value)" />
+				<mat-hint align="start">
+					<strong>Search</strong> in all fields
+				</mat-hint>
+			</mat-form-field>
+		</div>
+
+		<mat-table [dataSource]="dataSource" matSort>
+
+			<ng-container matColumnDef="name">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>name</mat-header-cell>
+				<mat-cell *matCellDef="let user" (click)="userDetail(user)">{{user.name}}</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="user">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>user</mat-header-cell>
+				<mat-cell *matCellDef="let user" (click)="userDetail(user)">{{user.user}}</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="email">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>email</mat-header-cell>
+				<mat-cell *matCellDef="let user" (click)="userDetail(user)">{{user.email}}</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="role">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>role</mat-header-cell>
+				<mat-cell *matCellDef="let user" (click)="userDetail(user)">
+					<ng-container *ngIf="user.role == 10">Super Admin</ng-container>
+					<ng-container *ngIf="user.role == 1">Admin</ng-container>
+					<ng-container *ngIf="user.role == 2">Messenger</ng-container>
+				</mat-cell>
+			</ng-container>
+
+			<ng-container matColumnDef="status">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>status</mat-header-cell>
+				<mat-cell *matCellDef="let user" (click)="userDetail(user)">
+					<ng-container *ngIf="user.status == 0">
+						<div class="status3">Active</div>
+					</ng-container>
+					<ng-container *ngIf="user.status == 1">
+						<div class="status1">InActive</div>
+					</ng-container>
+				</mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+			<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+		</mat-table>
+
+		<mat-paginator [showFirstLastButtons]="true" [pageSize]="10" [length]="10" [pageSizeOptions]="[10, 20, 30, 40]">
+		</mat-paginator>
+
+	</kt-portlet-body>
+</kt-portlet>
